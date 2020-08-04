@@ -30,6 +30,7 @@ const ProfileNavigation = createStackNavigator(
 const InventoryNavigation = createStackNavigator(
     {
       Inventory:Inventory,
+      Home:Homepage
     },
     {
       defaultNavigationOptions: {
@@ -44,6 +45,7 @@ const InventoryNavigation = createStackNavigator(
 const WorldNavigation = createStackNavigator(
     {
       World:World,
+      Home:Homepage
     },
     {
       defaultNavigationOptions: {
@@ -66,7 +68,7 @@ const JungleBottom = createBottomTabNavigator(
           tabBarIcon: (tabInfo) => {
             return (
               <Ionicons
-                name="ios-restaurant"
+                name="ios-person"
                 size={25}
                 color={tabInfo.tintColor}
               />
@@ -79,7 +81,7 @@ const JungleBottom = createBottomTabNavigator(
         navigationOptions: {
           tabBarIcon: (tabInfo) => {
             return (
-              <Ionicons name="ios-star" size={25} color={tabInfo.tintColor} />
+              <Ionicons name="ios-briefcase" size={25} color={tabInfo.tintColor} />
             );
           },
         },
@@ -89,7 +91,7 @@ const JungleBottom = createBottomTabNavigator(
         navigationOptions: {
           tabBarIcon: (tabInfo) => {
             return (
-              <Ionicons name="ios-star" size={25} color={tabInfo.tintColor} />
+              <Ionicons name="ios-business" size={25} color={tabInfo.tintColor} />
             );
           },
           

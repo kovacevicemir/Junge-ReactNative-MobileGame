@@ -11,19 +11,21 @@ const Inventory = () => {
     )
 }
 
-Inventory.navigationOptions = {
+
+Inventory.navigationOptions = navData =>{
+    return {
     headerRight: (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
             title="Home"
             iconName={Platform.OS === "android" ? "home" : "ios-home"}
             onPress={()=>{
-                // navData.navigation.navigate('Home');
-                console.log('HOMEPAGE!')
+                navData.navigation.navigate('Home');
             }}
           />
         </HeaderButtons>
       ),
+    }
 }
 
 export default Inventory
