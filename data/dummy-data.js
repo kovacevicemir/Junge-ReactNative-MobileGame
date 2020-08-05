@@ -20,15 +20,15 @@ export const mobs = [
 
 export const pets = [
     //id,name,level,mana,exp,attack,deffense,hp,image
-    new Pet('p1','cat',1,20,1,1,1,10,'https://i.imgur.com/rYnQRne.jpg'),
+    new Pet('p1','cat',1,20,1,1,1,10,'https://media0.giphy.com/media/B9yqVMxkcBpu0/giphy.gif'),
     new Pet('p2','dog',5,30,0,0,1,20,'https://pbs.twimg.com/profile_images/528591999272644608/agjfAJAW_400x400.jpeg'),
     new Pet('p3','wolf',10,50,1,1,3,30,'https://i.pinimg.com/236x/e6/af/d7/e6afd79712210fc1b2c168ac588a8b08--she-s-glow.jpg'),
 ]
 
 export const players = [
-    new Player('u1','player1@gmail.com','player_one',1,1,1,1000,10,5,100,5,5,100,'in1',{'weapon':'i1','armor':'i2','shield':'i3'},'https://image.freepik.com/free-vector/gamer-youtuber-gaming-avatar-with-headphones-esport-logo_8169-260.jpg','my status message','p1'),
-    new Player('u2','player2@gmail.com','player_two',1,1,1,1000,10,5,100,5,5,100,'in2',{'weapon':'i1','armor':'i2','shield':'i3'},'https://image.freepik.com/free-vector/gamer-youtuber-gaming-avatar-with-headphones-esport-logo_8169-260.jpg','my status message','p2'),
-    new Player('u3','player3@gmail.com','player_three',1,1,1,1000,10,5,100,5,5,100,'in3',{'weapon':'i1','armor':'i2','shield':'i3'},'https://image.freepik.com/free-vector/gamer-youtuber-gaming-avatar-with-headphones-esport-logo_8169-260.jpg','my status message','p3')
+    new Player('u1','player1@gmail.com','player_one',1,1,1,1000,10,5,100,5,5,100,'in1',{weapon:'i1',armor:'i2',shield:'i3'},'https://image.freepik.com/free-vector/gamer-youtuber-gaming-avatar-with-headphones-esport-logo_8169-260.jpg','my status message','p1'),
+    new Player('u2','player2@gmail.com','player_two',1,1,1,1000,10,5,100,5,5,100,'in2',{weapon:'i1',armor:'i2',shield:'i3'},'https://image.freepik.com/free-vector/gamer-youtuber-gaming-avatar-with-headphones-esport-logo_8169-260.jpg','my status message','p2'),
+    new Player('u3','player3@gmail.com','player_three',1,1,1,1000,10,5,100,5,5,100,'in3',{weapon:'i1',armor:'i2',shield:'i3'},'https://image.freepik.com/free-vector/gamer-youtuber-gaming-avatar-with-headphones-esport-logo_8169-260.jpg','my status message','p3')
 ]
 
 export const inventories = [
