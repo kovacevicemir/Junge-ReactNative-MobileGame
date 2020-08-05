@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,28 +6,34 @@ import {
   Platform,
   ScrollView,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert,
+  Modal,
+  TouchableHighlight,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../components/HeaderButton";
 import Colors from "../assets/Colors";
-import {useSelector} from 'react-redux'
+import { useSelector } from "react-redux";
+import ItemDetails from "../components/ItemDetails";
 
 const Profile = (props) => {
-  const fetchPlayer = useSelector(state => state.user.player)
-  const fetchPet = useSelector(state => state.user.pet)
-  const [player, setPlayer] = useState()
-  const [pet, setPet] = useState()
+  const fetchPlayer = useSelector((state) => state.user.player);
+  const fetchPet = useSelector((state) => state.user.pet);
+  const [player, setPlayer] = useState();
+  const [pet, setPet] = useState();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [clickedThing, setClickedThing] = useState();
 
-  useEffect(()=>{
-    setPlayer(fetchPlayer)
-    setPet(fetchPet)
-  },[fetchPlayer,fetchPet])
+  useEffect(() => {
+    setPlayer(fetchPlayer);
+    setPet(fetchPet);
+    props.navigation.setParams({player:player})
+  }, [fetchPlayer, fetchPet]);
 
-  if(!player || !pet){
-      return <Text>Trying to fetch Player or Pet... loading</Text>
+  if (!player || !pet) {
+    return <Text>Trying to fetch Player or Pet... loading</Text>;
   }
-
 
   return (
     <View style={styles.profileContainer}>
@@ -39,8 +45,7 @@ const Profile = (props) => {
             <Image
               style={styles.profilePicture}
               source={{
-                uri:
-                  player.image,
+                uri: player.image,
               }}
             />
             <Text>{player.profileStatus}</Text>
@@ -57,30 +62,63 @@ const Profile = (props) => {
         {/* Middle Section */}
         <View style={styles.midSection}>
           {/* Weapon */}
-          <TouchableOpacity style={styles.weapon} onPress={()=> {console.log('weapon clicked')}}>
-              <Image style={styles.itemImage} source={{uri:player.equipedItems.weapon.image}} />
+          <TouchableOpacity
+            style={styles.weapon}
+            onPress={() => {
+              setClickedThing(player.equipedItems.weapon);
+              setModalVisible(true);
+            }}
+          >
+            <Image
+              style={styles.itemImage}
+              source={{ uri: player.equipedItems.weapon.image }}
+            />
           </TouchableOpacity>
 
           {/* Armor */}
-          <TouchableOpacity style={styles.armor} onPress={()=> {console.log('armor clicked')}}>
-            <Image style={styles.itemImage} source={{uri:player.equipedItems.armor.image}} />
+          <TouchableOpacity
+            style={styles.armor}
+            onPress={() => {
+              setClickedThing(player.equipedItems.armor);
+              setModalVisible(true);
+            }}
+          >
+            <Image
+              style={styles.itemImage}
+              source={{ uri: player.equipedItems.armor.image }}
+            />
           </TouchableOpacity>
 
           {/* Shield */}
-          <TouchableOpacity style={styles.shield} onPress={()=> {console.log('shield clicked')}}>
-            <Image style={styles.itemImage} source={{uri:player.equipedItems.shield.image}} />
+          <TouchableOpacity
+            style={styles.shield}
+            onPress={() => {
+              setClickedThing(player.equipedItems.shield);
+              setModalVisible(true);
+            }}
+          >
+            <Image
+              style={styles.itemImage}
+              source={{ uri: player.equipedItems.shield.image }}
+            />
           </TouchableOpacity>
         </View>
 
         {/* BottomSection */}
-        <View style={styles.petContainer}>
+        <View style={styles.bottomSection}>
           {/* pet */}
-          <View style={styles.pet}>
-              <Image style={styles.petPicture} source={{uri:pet.image}} />
-              <View style={styles.petName}>
-                <Text >Pet: {pet.name}</Text>
-              </View>
-          </View>
+          <TouchableOpacity
+            style={styles.pet}
+            onPress={() => {
+              setClickedThing(pet);
+              setModalVisible(true);
+            }}
+          >
+            <Image style={styles.petPicture} source={{ uri: pet.image }} />
+            <View style={styles.petName}>
+              <Text>Pet: {pet.name}</Text>
+            </View>
+          </TouchableOpacity>
 
           {/* playerStatus */}
           <View style={styles.playerStatus}>
@@ -94,6 +132,36 @@ const Profile = (props) => {
           </View>
         </View>
       </ScrollView>
+
+      {/* MODAL FOR ITEM OR PET */}
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <ItemDetails
+                clickedThing={clickedThing}
+                style={styles.modalText}
+              ></ItemDetails>
+
+              <TouchableHighlight
+                style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Text style={styles.textStyle}>Close</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+      </View>
     </View>
   );
 };
@@ -182,8 +250,8 @@ const styles = StyleSheet.create({
     height: 150,
     backgroundColor: "white",
   },
-  petContainer: {
-    marginTop: 30,
+  bottomSection: {
+    marginTop: 60,
     flex: 1,
     flexDirection: "row",
     width: "100%",
@@ -195,14 +263,14 @@ const styles = StyleSheet.create({
     height: 130,
     backgroundColor: "white",
   },
-  petPicture:{
-      width:130,
-      height:110
+  petPicture: {
+    width: 130,
+    height: 110,
   },
-  petName:{
-    justifyContent:'center',
-    alignItems:'center'
-  },    
+  petName: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
   playerStatus: {
     width: 200,
     height: 130,
@@ -210,8 +278,43 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
   },
-  itemImage:{
-      flex:1
-  }
-  
+  itemImage: {
+    flex: 1,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  openButton: {
+    backgroundColor: "#F194FF",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+  },
 });

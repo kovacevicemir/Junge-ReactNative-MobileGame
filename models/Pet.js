@@ -1,5 +1,5 @@
 class Mob {
-    constructor(id,name,level,mana,exp,attack,deffense,hp,image){
+    constructor(id,name,level,mana,exp,attack,deffense,hp,image, gold){
         this.id = id,
         this.name = name,
         this.level = level,
@@ -8,7 +8,8 @@ class Mob {
         this.attack = attack,
         this.deffense = deffense,
         this.hp = hp,
-        this.image = image
+        this.image = image,
+        this.gold = gold
     }
   }
   
