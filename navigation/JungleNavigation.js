@@ -1,4 +1,4 @@
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import { createStackNavigator, createAppContainer, createSwitchNavigator } from "react-navigation";
 import React from 'react'
 
 import { createBottomTabNavigator } from "react-navigation-tabs";
@@ -110,4 +110,13 @@ const JungleBottom = createBottomTabNavigator(
   );
 
 
-export default createAppContainer(JungleBottom);
+  const MainNav = createSwitchNavigator(
+    {
+        Home:JungleBottom,
+        Auth:Authentication,
+    },
+  );
+  
+
+
+export default createAppContainer(MainNav);

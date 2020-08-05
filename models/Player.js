@@ -16,10 +16,11 @@ class Player {
     inventoryId,
     equipedItems,
     image,
-    profileStatus
+    profileStatus,
+    pet
   ) {
     (this.id = id),
-      (this.email = email)
+      (this.email = email),
       (this.nickname = nickname),
       (this.level = level),
       (this.experience = experience),
@@ -34,7 +35,8 @@ class Player {
       (this.inventoryId = inventoryId),
       (this.equipedItems = equipedItems),
       (this.image = image),
-      (this.profileStatus = profileStatus);
+      (this.profileStatus = profileStatus),
+        this.pet = pet;
   }
 }
 

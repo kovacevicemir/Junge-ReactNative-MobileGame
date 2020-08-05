@@ -1,13 +1,21 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-const Authentication = () => {
+const Authentication = (props) => {
     return (
         <View style={styles.main}>
             <Text>AUTHENTICATION</Text>
         </View>
     )
 }
+
+Authentication.navigationOptions = navData =>{
+    return {
+        headerTitle:'J U N G L E'
+    }
+}
+
+
 
 export default Authentication
 
