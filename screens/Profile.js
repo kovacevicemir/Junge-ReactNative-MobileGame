@@ -148,6 +148,7 @@ const Profile = (props) => {
               <ItemDetails
                 clickedThing={clickedThing}
                 style={styles.modalText}
+                fontColor={Colors.secondaryFont}
               ></ItemDetails>
 
               <TouchableHighlight

@@ -5,9 +5,11 @@ import Player from '../models/Player'
 import Inventory from '../models/Inventory'
 
 export const items = [
-    new Item('i1','Axe',12,0,0,5,1,1,'https://lh3.googleusercontent.com/-CJHeNzSEHkE/WqHJ28G5f7I/AAAAAAAAA0c/ht3V5_iHI3s6Sh5Uu5xj9u8xf6YnzuW-ACLcBGAs/h190/Small+Axe.png', 1),
-    new Item('i2','Armor',2,4,2,2,1,1,'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT5BgWPwDJCWwvDrxHTAQ4PvmsTgP3vK2t72A&usqp=CAU', 1),
-    new Item('i3','Shield',0,7,3,0,1,1,'https://www.mubufon.com/wp-content/uploads/2019/12/img_shield_kiteshield.jpg', 1)
+    //id,name,attack,deffense,block,critical,level,upgrade,image,gold
+    new Item('i1','Axe',12,0,0,5,1,1,'https://lh3.googleusercontent.com/-CJHeNzSEHkE/WqHJ28G5f7I/AAAAAAAAA0c/ht3V5_iHI3s6Sh5Uu5xj9u8xf6YnzuW-ACLcBGAs/h190/Small+Axe.png', 1, 'weapon'),
+    new Item('i5','AxeInventory',12,0,0,5,1,1,'https://lh3.googleusercontent.com/-CJHeNzSEHkE/WqHJ28G5f7I/AAAAAAAAA0c/ht3V5_iHI3s6Sh5Uu5xj9u8xf6YnzuW-ACLcBGAs/h190/Small+Axe.png', 1, 'weapon'),
+    new Item('i2','Armor',2,4,2,2,1,1,'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT5BgWPwDJCWwvDrxHTAQ4PvmsTgP3vK2t72A&usqp=CAU', 1, 'armor'),
+    new Item('i3','Shield',0,7,3,0,1,1,'https://www.mubufon.com/wp-content/uploads/2019/12/img_shield_kiteshield.jpg', 1, 'shield')
 ]
 
 export const mobs = [
@@ -32,7 +34,9 @@ export const players = [
 ]
 
 export const inventories = [
-    new Inventory('iv1',['i1','i2','i3']),
-    new Inventory('iv2',['i1','i2','i3']),
-    new Inventory('iv3',['i1','i2','i3'])
+    new Inventory('in1',[items[1],items[2],pets[0]]),
+
+
+    new Inventory('in2',['i1','i2','i3']),
+    new Inventory('in3',['i1','i2','i3'])
 ]

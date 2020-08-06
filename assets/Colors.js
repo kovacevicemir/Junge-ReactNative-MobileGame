@@ -2,7 +2,8 @@ const Colors = {
     primary:'#ccc',
     secondary:'red',
     background:'#363636',
-    primaryFont:'#CCCED0'
+    primaryFont:'white',
+    secondaryFont:'black'
 }
 
 export default Colors

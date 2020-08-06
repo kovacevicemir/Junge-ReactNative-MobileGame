@@ -2,22 +2,21 @@ import React from 'react'
 import { StyleSheet, Text, View, Image } from 'react-native'
 
 const ItemDetails = (props) => {
-    const {clickedThing} = props
-    console.log(typeof(clickedThing))
+    const {clickedThing,fontColor} = props
 
     if(clickedThing.exp){
         // PET
         return (
             <View>
                 <Image style={styles.imageContainerPet} source={{uri:clickedThing.image}} />
-                <Text>{clickedThing.name}</Text>
-                <Text>level:{clickedThing.level}</Text>
-                <Text>Exp:{clickedThing.exp}</Text>
-                <Text>+Attack:{clickedThing.attack}</Text>
-                <Text>+Deffense:{clickedThing.deffense}</Text>
-                <Text>+Health Point:{clickedThing.hp}</Text>
-                <Text>+Mana per Hour:{clickedThing.mana}</Text>
-                <Text>Gold:{clickedThing.gold}</Text>
+                <Text style={{color:fontColor}}>{clickedThing.name}</Text>
+                <Text style={{color:fontColor}}>level:{clickedThing.level}</Text>
+                <Text style={{color:fontColor}}>Exp:{clickedThing.exp}</Text>
+                <Text style={{color:fontColor}}>+Attack:{clickedThing.attack}</Text>
+                <Text style={{color:fontColor}}>+Deffense:{clickedThing.deffense}</Text>
+                <Text style={{color:fontColor}}>+Health Point:{clickedThing.hp}</Text>
+                <Text style={{color:fontColor}}>+Mana per Hour:{clickedThing.mana}</Text>
+                <Text style={{color:fontColor}}>Gold:{clickedThing.gold}</Text>
             </View>
         )
 
@@ -25,16 +24,16 @@ const ItemDetails = (props) => {
 
     //ITEM
     return (
-        <View>
+        <View style={styles.itemContainer}>
             <Image style={styles.imageContainer} source={{uri:clickedThing.image}} />
-            <Text>{clickedThing.name}</Text>
-            <Text>Attack:{clickedThing.attack}</Text>
-            <Text>Deffense:{clickedThing.deffense}</Text>
-            <Text>Critical:{clickedThing.crit}%</Text>
-            <Text>Block:{clickedThing.block}%</Text>
-            <Text>level:{clickedThing.level}</Text>
-            <Text>Tier:{clickedThing.upgrade}</Text>
-            <Text>Gold:{clickedThing.gold}</Text>
+            <Text style={{color:fontColor}}>{clickedThing.name}</Text>
+            <Text style={{color:fontColor}}>Attack:{clickedThing.attack}</Text>
+            <Text style={{color:fontColor}}>Deffense:{clickedThing.deffense}</Text>
+            <Text style={{color:fontColor}}>Critical:{clickedThing.crit}%</Text>
+            <Text style={{color:fontColor}}>Block:{clickedThing.block}%</Text>
+            <Text style={{color:fontColor}}>level:{clickedThing.level}</Text>
+            <Text style={{color:fontColor}}>Tier:{clickedThing.upgrade}</Text>
+            <Text style={{color:fontColor}}>Gold:{clickedThing.gold}</Text>
         </View>
     )
 }
@@ -49,5 +48,5 @@ const styles = StyleSheet.create({
     imageContainerPet:{
         minHeight:175,
         minWidth:175
-    }
+    },
 })
