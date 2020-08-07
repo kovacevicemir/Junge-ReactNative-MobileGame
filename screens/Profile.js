@@ -19,19 +19,16 @@ import ItemDetails from "../components/ItemDetails";
 
 const Profile = (props) => {
   const fetchPlayer = useSelector((state) => state.user.player);
-  const fetchPet = useSelector((state) => state.user.pet);
   const [player, setPlayer] = useState();
-  const [pet, setPet] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const [clickedThing, setClickedThing] = useState();
 
   useEffect(() => {
     setPlayer(fetchPlayer);
-    setPet(fetchPet);
     props.navigation.setParams({player:player})
-  }, [fetchPlayer, fetchPet]);
+  }, [fetchPlayer]);
 
-  if (!player || !pet) {
+  if (!player) {
     return <Text>Trying to fetch Player or Pet... loading</Text>;
   }
 
@@ -71,6 +68,7 @@ const Profile = (props) => {
           >
             <Image
               style={styles.itemImage}
+              key={player.equipedItems.weapon.id}
               source={{ uri: player.equipedItems.weapon.image }}
             />
           </TouchableOpacity>
@@ -85,6 +83,7 @@ const Profile = (props) => {
           >
             <Image
               style={styles.itemImage}
+              key={player.equipedItems.armor.id}
               source={{ uri: player.equipedItems.armor.image }}
             />
           </TouchableOpacity>
@@ -99,6 +98,7 @@ const Profile = (props) => {
           >
             <Image
               style={styles.itemImage}
+              key={player.equipedItems.shield.id}
               source={{ uri: player.equipedItems.shield.image }}
             />
           </TouchableOpacity>
@@ -110,13 +110,13 @@ const Profile = (props) => {
           <TouchableOpacity
             style={styles.pet}
             onPress={() => {
-              setClickedThing(pet);
+              setClickedThing(player.pet);
               setModalVisible(true);
             }}
           >
-            <Image style={styles.petPicture} source={{ uri: pet.image }} />
+            <Image style={styles.petPicture} key={player.pet.id} source={{ uri: player.pet.image }} />
             <View style={styles.petName}>
-              <Text>Pet: {pet.name}</Text>
+              <Text>Pet: {player.pet.name}</Text>
             </View>
           </TouchableOpacity>
 

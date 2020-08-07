@@ -3,17 +3,16 @@ import {players} from '../../data/dummy-data'
 import {inventories} from '../../data/dummy-data'
 import {pets} from '../../data/dummy-data'
 import {items} from '../../data/dummy-data'
+import {statsTotal} from '../../helpers/statsTotal'
 
-import {LOGIN, EQUIP} from '../actions/user'
+import {LOGIN, EQUIP, DELETE_ITEM} from '../actions/user'
 import Player from '../../models/Player'
 
-const player = players.find(player => player.id === 'u1')
+let player = players.find(player => player.id === 'u1')
 const inventory = inventories.find(inventory => inventory.id === player.inventoryId)
-const pet = pets.find(pet => pet.id === player.pet)
-//get items to player
-player.equipedItems.weapon = items.find(item => item.id === player.equipedItems.weapon)
-player.equipedItems.armor = items.find(item => item.id === player.equipedItems.armor)
-player.equipedItems.shield = items.find(item => item.id === player.equipedItems.shield)
+
+//Calculate player stats
+player = statsTotal(player)
 
 
 const initialState = {
@@ -21,7 +20,6 @@ const initialState = {
     userId: 'u1',
     player: player,
     inventory: inventory,
-    pet:pet
 }
 
 export default (state = initialState, action) =>{
@@ -35,13 +33,13 @@ export default (state = initialState, action) =>{
             //If equiping item
             if(action.payload.upgrade){
                 //Remove item from inventory
-                const newInventory = {...inventory}
+                const newInventory = {...state.inventory}
                 const inventoryItems = newInventory.items
                 const UpdatedInventoryItems = inventoryItems.filter(item => {
                     return item.id != action.payload.id}
                 )
 
-                const eqpItems = {...player.equipedItems}
+                const eqpItems = {...state.player.equipedItems}
                 const itemType = action.payload.type
                 
                 //check if some item is already equiped
@@ -57,12 +55,10 @@ export default (state = initialState, action) =>{
                     //If no item is equiped
                     //than equip new item
                     eqpItems[itemType] = action.payload
-                    //Store originaly equiped item in user inventory
-                    UpdatedInventoryItems.push(unequipedItemForInventory)
                 }
 
                 newInventory.items = UpdatedInventoryItems;
-                const updatedPlayer = {...player}
+                const updatedPlayer = {...state.player}
                 updatedPlayer.equipedItems = eqpItems
 
 
@@ -73,8 +69,57 @@ export default (state = initialState, action) =>{
                     // state
                 };
 
+            }else{
+                //if equiping pet
+                const updatedPlayer = {...state.player}
+                //remove pet from inventory
+                const newInventory = {...state.inventory}
+                const inventoryItems = newInventory.items
+                const UpdatedInventoryItems = inventoryItems.filter(item => {
+                    return item.id != action.payload.id}
+                )
+
+                const pet = {...state.player.pet}
+                let unequipedItemForInventory;
+
+                //check if pet is already equiped
+                if(pet){
+                    //save equiped item
+                    unequipedItemForInventory = pet
+                    //than equip new item
+                    updatedPlayer.pet = action.payload
+                    //Store originaly equiped item in user inventory
+                    UpdatedInventoryItems.push(unequipedItemForInventory)
+                }else{
+                    //If no item is equiped
+                    //than equip new item
+                    updatedPlayer.pet = action.payload
+                }
+
+                newInventory.items = UpdatedInventoryItems;
+
+                return {
+                    ...state,
+                    inventory:newInventory,
+                    player:updatedPlayer
+                }
             }
 
+        case DELETE_ITEM:
+            //Remove item from inventory
+            const newInventory = {...state.inventory}
+            const inventoryItems = newInventory.items
+            const UpdatedInventoryItems = inventoryItems.filter(item => {
+                return item.id != action.payload.id}
+            )
+            newInventory.items = [...UpdatedInventoryItems];
+            console.log(newInventory)
+
+            return{
+                ...state,
+                inventory:newInventory
+            }
+                        
             
     
         default:

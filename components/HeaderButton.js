@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { HeaderButton } from "react-navigation-header-buttons";
 import { Ionicons } from "@expo/vector-icons";
@@ -7,9 +7,12 @@ import { Platform } from "react-native";
 import { useSelector } from "react-redux";
 
 const CustomHeaderButton = (props) => {
-
-  const player = useSelector(state=>state.user.player)
-
+  const [player, setPlayer] = useState()
+  const fetchPlayer = useSelector(state=>state.user.player)
+  
+  useEffect(()=>{
+    setPlayer(fetchPlayer)
+  },[fetchPlayer])
 
 
   return (
