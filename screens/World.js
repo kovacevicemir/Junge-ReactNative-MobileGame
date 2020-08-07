@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Platform, Button } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import WorldArea from "../components/WorldArea"
+import {getRandomMobs} from "../helpers/getRandomMobs"
 import HeaderButton from "../components/HeaderButton";
 import Colors from "../assets/Colors";
 import { useSelector } from "react-redux";
@@ -12,6 +14,7 @@ const World = (props) => {
   const [player, setPlayer] = useState();
   const [worlds, setWorlds] = useState();
   const [world, setWorld] = useState();
+  const [randomMonsters, setRandomMonsters] = useState()
 
 
   useEffect(() => {
@@ -21,7 +24,14 @@ const World = (props) => {
 
   useEffect(() => {
     setWorlds(fetchWorlds);
+    
   }, []);
+
+  useEffect(()=>{
+    if(world){
+      setRandomMonsters(getRandomMobs(world.monsters,world.boss))
+    }
+  },[])
 
   //on swipe
   const onSwipe =(gestureName, gestureState) => {
@@ -37,7 +47,8 @@ const World = (props) => {
         setWorld(null)
         break;
       case SWIPE_RIGHT:
-        console.log('swipe right')
+        console.log('SWIPE ->>>')
+        setRandomMonsters(getRandomMobs(world.monsters,world.boss))
         break;
     }
   }
@@ -46,8 +57,7 @@ const World = (props) => {
     return <Text>Fetching worlds...</Text>;
   }
 
-  if(world){
-
+  if(world && randomMonsters){
     const config = {
       velocityThreshold: 0.3,
       directionalOffsetThreshold: 80
@@ -56,10 +66,12 @@ const World = (props) => {
     return (
       <GestureRecognizer
         onSwipe={(direction, state) => onSwipe(direction, state)}
-        style={{flex:1}}
+        style={{flex:1, width:'100%', backgroundColor:'red'}}
         config={config}
       >
-
+        {/* World Area */}
+          <WorldArea world={world} randomMonsters={randomMonsters} />
+        {/* World Area end */}
       </GestureRecognizer>
     )
   }
@@ -70,7 +82,10 @@ const World = (props) => {
       <Button
         key={world.id}
         title={`${world.name} (${world.levelRange}) LVL`}
-        onPress={() => setWorld(world)}
+        onPress={() => {
+          setWorld(world)
+          setRandomMonsters(getRandomMobs(world.monsters,world.boss))
+        }}
       />
     );
   });
