@@ -3,6 +3,7 @@ import Mob from '../models/Mob'
 import Pet from '../models/Pet'
 import Player from '../models/Player'
 import Inventory from '../models/Inventory'
+import World from '../models/World'
 
 export const items = [
     //id,name,attack,deffense,block,critical,level,upgrade,image,gold
@@ -39,4 +40,10 @@ export const inventories = [
 
     new Inventory('in2',['i1','i2','i3']),
     new Inventory('in3',['i1','i2','i3'])
+]
+
+export const worlds = [
+    //id,name,levelRange,monsters,boss
+    new World('w1','Mystic Forest','1-10',[mobs[0],mobs[1]],mobs[3]),
+    new World('w2','Puma Mountain','10-20',[mobs[0],mobs[1]],mobs[3])
 ]

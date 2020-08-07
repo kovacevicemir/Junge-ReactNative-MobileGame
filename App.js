@@ -5,13 +5,15 @@ import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import ReduxThunk from 'redux-thunk'
 import { Provider } from "react-redux";
 import userReducer from "./store/reducers/user";
+import worldReducer from "./store/reducers/world"
 
 import { enableScreens } from "react-native-screens";
 enableScreens();
 
 
 const rootReducer = combineReducers({
-  user:userReducer
+  user:userReducer,
+  world:worldReducer
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
