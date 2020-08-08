@@ -13,7 +13,7 @@ import {useDispatch} from 'react-redux'
 import * as WorldActions from '../store/actions/world'
 
 const WorldArea = (props) => {
-  const { world, randomMonsters, fetching, player } = props;
+  const { world, randomMonsters, fetching, player, fight } = props;
   console.log("worldArea.js random mobs :", randomMonsters[0].id);
   console.log("worldArea.js player: ",player.nickname)
 
@@ -24,7 +24,8 @@ const WorldArea = (props) => {
 
   useEffect(() => {
     setMobs(randomMonsters);
-  }, [randomMonsters]);
+    fight ? setIsFight(true) : setIsFight(false)
+  }, [randomMonsters,fight]);
 
   const attackMonster = (mob,player) =>{
       console.log('attackMonster method: ',player.nickname)

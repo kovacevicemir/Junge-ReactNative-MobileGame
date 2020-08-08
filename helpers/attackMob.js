@@ -50,7 +50,9 @@ export const attackMob = (mob,player) =>{
     const OUTPUT = {
         win:win,
         drop:drop,
-        fightLog:fightLog
+        fightLog:fightLog,
+        player:player,
+        mob:mob
     }
 
     return OUTPUT

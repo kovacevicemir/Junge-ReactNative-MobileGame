@@ -6,17 +6,20 @@ import {ATTACK_MOB} from '../actions/world'
 import {attackMob} from '../../helpers/attackMob'
 
 const initialState = {
-    worlds:worlds
+    worlds:worlds,
+    fight:null
 }
 
 export default (state = initialState, action) =>{
     switch (action.type) {
         case ATTACK_MOB:
             const result = attackMob(action.payload.mob,action.payload.player)
+            // AT TT A CK MOB SHOULD BE IN THE ACTION maybe !
 
-            console.log(result)
-
-            return state
+            return {
+                ...state,
+                fight:result
+            }
     
         default:
             return state;
