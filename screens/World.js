@@ -15,6 +15,7 @@ const World = (props) => {
   const [worlds, setWorlds] = useState();
   const [world, setWorld] = useState();
   const [randomMonsters, setRandomMonsters] = useState()
+  const [generatingMobs, setGeneratingMobs] = useState(false)
 
 
   useEffect(() => {
@@ -24,12 +25,12 @@ const World = (props) => {
 
   useEffect(() => {
     setWorlds(fetchWorlds);
-    
   }, []);
 
   useEffect(()=>{
     if(world){
       setRandomMonsters(getRandomMobs(world.monsters,world.boss))
+      setGeneratingMobs(false)
     }
   },[])
 
@@ -43,6 +44,10 @@ const World = (props) => {
         break;
       case SWIPE_RIGHT:
         console.log('SWIPE ->>>')
+        setGeneratingMobs(true)
+        setTimeout(() => {
+          setGeneratingMobs(false)
+        }, 2000);
         setRandomMonsters(getRandomMobs(world.monsters,world.boss))
         break;
     }
@@ -81,7 +86,7 @@ const World = (props) => {
         </GestureRecognizer>
 
         {/* World Area */}
-        <WorldArea world={world} randomMonsters={randomMonsters} />
+          <WorldArea world={world} randomMonsters={randomMonsters} player={player} fetching={generatingMobs}/>
         {/* World Area end */}
       </View>
     )
