@@ -14,8 +14,6 @@ import * as WorldActions from '../store/actions/world'
 
 const WorldArea = (props) => {
   const { world, randomMonsters, fetching, player, fight } = props;
-  console.log("worldArea.js random mobs :", randomMonsters[0].id);
-  console.log("worldArea.js player: ",player.nickname)
 
   const dispatch = useDispatch()
 

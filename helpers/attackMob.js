@@ -41,11 +41,11 @@ export const attackMob = (mob,player) =>{
     }
 
     //did player won?
-    playerHpLeft < 0 ? win = false : win = true
+    playerHpLeft < 0 ? win = 'lost' : win = 'win'
 
     //drop ?
     let rndNum = Math.floor(Math.random() * Math.floor(2))
-    let drop = rndNum === 0 ? 'DROP' : 'NO DROP'
+    let drop = rndNum === 0 ? 'DROP' : null
 
     const OUTPUT = {
         win:win,
