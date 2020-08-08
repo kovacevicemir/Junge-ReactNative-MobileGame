@@ -58,8 +58,11 @@ export default (state = initialState, action) =>{
                 }
 
                 newInventory.items = UpdatedInventoryItems;
-                const updatedPlayer = {...state.player}
+                let updatedPlayer = {...state.player}
                 updatedPlayer.equipedItems = eqpItems
+
+                //update stats
+                updatedPlayer = statsTotal(updatedPlayer)
 
 
                 return {
@@ -71,7 +74,7 @@ export default (state = initialState, action) =>{
 
             }else{
                 //if equiping pet
-                const updatedPlayer = {...state.player}
+                let updatedPlayer = {...state.player}
                 //remove pet from inventory
                 const newInventory = {...state.inventory}
                 const inventoryItems = newInventory.items
@@ -97,6 +100,9 @@ export default (state = initialState, action) =>{
                 }
 
                 newInventory.items = UpdatedInventoryItems;
+
+                //update stats
+                updatedPlayer = statsTotal(updatedPlayer)
 
                 return {
                     ...state,

@@ -8,7 +8,7 @@ import World from '../models/World'
 export const items = [
     //id,name,attack,deffense,block,critical,level,upgrade,image,gold
     new Item('i1','Axe',12,0,0,5,1,1,'https://lh3.googleusercontent.com/-CJHeNzSEHkE/WqHJ28G5f7I/AAAAAAAAA0c/ht3V5_iHI3s6Sh5Uu5xj9u8xf6YnzuW-ACLcBGAs/h190/Small+Axe.png', 1, 'weapon'),
-    new Item('i5','AxeInventory',12,0,0,5,1,1,'https://wiki.guildwars.com/images/f/f2/Spiked_Axe.jpg', 1, 'weapon'),
+    new Item('i5','AxeInventory',15,0,0,6,2,2,'https://wiki.guildwars.com/images/f/f2/Spiked_Axe.jpg', 1, 'weapon'),
     new Item('i2','Armor',2,4,2,2,1,1,'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT5BgWPwDJCWwvDrxHTAQ4PvmsTgP3vK2t72A&usqp=CAU', 1, 'armor'),
     new Item('i3','Shield',0,7,3,0,1,1,'https://www.mubufon.com/wp-content/uploads/2019/12/img_shield_kiteshield.jpg', 1, 'shield')
 ]
@@ -44,6 +44,6 @@ export const inventories = [
 
 export const worlds = [
     //id,name,levelRange,monsters,boss
-    new World('w1','Mystic Forest','1-10',[mobs[0],mobs[1]],mobs[2]),
-    new World('w2','Puma Mountain','10-20',[mobs[0],mobs[1]],mobs[2])
+    new World('w1','Mystic Forest','https://www.rainforest-alliance.org/sites/default/files/styles/900w/public/2019-07/misty%20forest%20ferns.jpg?itok=knEAi7E3','1-10',[mobs[0],mobs[1]],mobs[2]),
+    new World('w2','Puma Mountain','https://lh3.googleusercontent.com/ioE2Vmd8tbo2_OlcIZ03zGVF8ezaiYG1L6BhEQ4Rl8xFJmgd-6jNSwInBc7qrhNx','10-20',[mobs[0],mobs[1],mobs[2],mobs[1],mobs[0],mobs[1],mobs[2],mobs[1]],mobs[2])
 ]

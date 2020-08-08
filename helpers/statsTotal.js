@@ -34,6 +34,7 @@ export const statsTotal = (player) =>{
         TotalDeffense += player.pet.deffense
         //@total hp
         let TotalHp = player.pet.hp
+        console.log(TotalHp)
 
 
     //MULTIPLY HP BASED ON LEVEL
@@ -61,12 +62,12 @@ export const statsTotal = (player) =>{
         }
 
         //ALGO: TotalHp = 100 * 13(lvl) * 1.2 => 1300 * 1.2 =  1560
-        TotalHp = (100 * player.level) * levelRadius
+        TotalHp += (100 * player.level) * levelRadius
 
     //RETURN PLAYER AFTER UPDATING TOTAL STATUSES
     player.attack = TotalAttack
     player.deffense = TotalDeffense
-    player.critical = TotalCritical
+    player.crit = TotalCritical
     player.block = TotalBlock
     player.hp = TotalHp
     player.hourMana = player.pet.mana + 20

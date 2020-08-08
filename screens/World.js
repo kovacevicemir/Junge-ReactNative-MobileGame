@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Platform, Button } from "react-native";
+import { StyleSheet, Text, View, Platform, Button, ImageBackground } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import WorldArea from "../components/WorldArea"
 import {getRandomMobs} from "../helpers/getRandomMobs"
@@ -35,14 +35,9 @@ const World = (props) => {
 
   //on swipe
   const onSwipe =(gestureName, gestureState) => {
-    const {SWIPE_UP, SWIPE_DOWN, SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
+    const { SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
     switch (gestureName) {
-      case SWIPE_UP:
-        console.log('swipe up')
-        break;
-      case SWIPE_DOWN:
-        console.log('swipe down')
-        break;
+      
       case SWIPE_LEFT:
         setWorld(null)
         break;
@@ -60,19 +55,35 @@ const World = (props) => {
   if(world && randomMonsters){
     const config = {
       velocityThreshold: 0.3,
-      directionalOffsetThreshold: 80
+      directionalOffsetThreshold: 80,
+      detectSwipeDown:false,
+      detectSwipeUp:false
     };
 
     return (
-      <GestureRecognizer
-        onSwipe={(direction, state) => onSwipe(direction, state)}
-        style={{flex:1, width:'100%', backgroundColor:'red'}}
-        config={config}
-      >
+      <View style={{flex:1}}>
+        <GestureRecognizer
+          onSwipe={(direction, state) => onSwipe(direction, state)}
+          style={{flex:1, width:'100%', backgroundColor:Colors.background}}
+          config={config}
+        >
+          {/* Top */}
+          <View style={{flex:1}}>
+            <View style={styles.areaTop}>
+            <Text style={styles.worldTitle}>{world.name}</Text>
+            <ImageBackground
+              source={{ uri: world.image }}
+              style={styles.backgroundImage}
+            ></ImageBackground>
+          </View>
+          </View>
+          {/* Top end */}
+        </GestureRecognizer>
+
         {/* World Area */}
-          <WorldArea world={world} randomMonsters={randomMonsters} />
+        <WorldArea world={world} randomMonsters={randomMonsters} />
         {/* World Area end */}
-      </GestureRecognizer>
+      </View>
     )
   }
 
@@ -120,5 +131,22 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  areaTop: {
+    height: "50%",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+  },
+  worldTitle: {
+    fontSize: 16,
+    color: Colors.primaryFont,
   },
 });

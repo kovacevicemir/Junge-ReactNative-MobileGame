@@ -29,7 +29,7 @@ const ItemDetails = (props) => {
             <Text style={{color:fontColor}}>{clickedThing.name}</Text>
             <Text style={{color:fontColor}}>Attack:{clickedThing.attack}</Text>
             <Text style={{color:fontColor}}>Deffense:{clickedThing.deffense}</Text>
-            <Text style={{color:fontColor}}>Critical:{clickedThing.crit}%</Text>
+            <Text style={{color:fontColor}}>Critical:{clickedThing.critical}%</Text>
             <Text style={{color:fontColor}}>Block:{clickedThing.block}%</Text>
             <Text style={{color:fontColor}}>level:{clickedThing.level}</Text>
             <Text style={{color:fontColor}}>Tier:{clickedThing.upgrade}</Text>
