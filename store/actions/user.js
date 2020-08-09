@@ -2,6 +2,7 @@
 export const LOGIN = 'LOGIN'
 export const EQUIP = 'EQUIP'
 export const DELETE_ITEM = 'DELETE_ITEM'
+export const REMOVE_GLOBAL_MESSAGE = 'REMOVE_GLOBAL_MESSAGE'
 
 
 //USER ACTION CREATORS
@@ -15,4 +16,8 @@ export const equip = (item) =>{
 
 export const deleteItem = (item) =>{
     return {type:DELETE_ITEM, payload:item}
+}
+
+export const removeGlobalMessage = () =>{
+    return {type:REMOVE_GLOBAL_MESSAGE, payload:{}}
 }

@@ -4,8 +4,13 @@ import {inventories} from '../../data/dummy-data'
 import {pets} from '../../data/dummy-data'
 import {items} from '../../data/dummy-data'
 import {statsTotal} from '../../helpers/statsTotal'
+import {attackMob} from '../../helpers/attackMob'
+import {isLevelUp} from '../../helpers/isLevelUp'
 
-import {LOGIN, EQUIP, DELETE_ITEM} from '../actions/user'
+import {LOGIN, EQUIP, DELETE_ITEM, REMOVE_GLOBAL_MESSAGE} from '../actions/user'
+import {ATTACK_MOB} from '../actions/world'
+
+
 import Player from '../../models/Player'
 
 let player = players.find(player => player.id === 'u1')
@@ -20,10 +25,17 @@ const initialState = {
     userId: 'u1',
     player: player,
     inventory: inventory,
+    globalMessage:null
 }
 
 export default (state = initialState, action) =>{
     switch (action.type) {
+        case REMOVE_GLOBAL_MESSAGE:
+            return{
+                ...state,
+                globalMessage:null
+            }
+
         case LOGIN:
             
             return state;
@@ -126,7 +138,38 @@ export default (state = initialState, action) =>{
                 inventory:newInventory
             }
                         
-            
+        case ATTACK_MOB:
+            const result = attackMob(action.payload.mob,action.payload.player)
+            if(result.win == 'win'){
+                let updatedPlayer = {...state.player}
+                let newInventory = {...state.inventory}
+                // update player exp and gold if win
+                updatedPlayer.experience += result.mob.exp
+                updatedPlayer.gold += result.mob.gold
+
+                if(result.drop == 'DROP'){
+                    console.log('user.js reducer... here update inventory...')
+                }
+
+                //check if level up
+                let levelUp = isLevelUp(updatedPlayer)
+                let levelUpMessage = null;
+                if(levelUp){
+                    updatedPlayer.level += 1;
+                    levelUpMessage = 'Congratz! LVL UP!!!' + updatedPlayer.level +1;
+
+                }
+
+                return {
+                    ...state,
+                    player:updatedPlayer,
+                    globalMessage:levelUpMessage
+                }
+
+                
+            }else{
+                return state;
+            }
     
         default:
             return state;

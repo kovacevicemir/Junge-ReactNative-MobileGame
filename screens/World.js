@@ -7,19 +7,53 @@ import {
   Button,
   ImageBackground,
   Image,
+  Alert 
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import WorldArea from "../components/WorldArea";
 import { getRandomMobs } from "../helpers/getRandomMobs";
 import HeaderButton from "../components/HeaderButton";
 import Colors from "../assets/Colors";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import * as UserActions from '../store/actions/user'
 import GestureRecognizer, {
   swipeDirections,
 } from "react-native-swipe-gestures";
 import * as Progress from "react-native-progress";
 
+
 const World = (props) => {
+
+  const dispatch = useDispatch()
+
+  //global message
+  const fetchGlobalMessage = useSelector((state) => state.user.globalMessage)
+  const [message, setMessage] = useState()
+
+  console.log('globalMessage: ',fetchGlobalMessage)
+  
+
+  useEffect(()=>{
+    if(fetchGlobalMessage){
+      Alert.alert(
+        "LEVEL UP!",
+        "Congrationlations!",
+        [
+          {
+            text: "OK",
+            onPress: () => dispatch(UserActions.removeGlobalMessage()),
+            style: "cancel"
+          },
+        ],
+        { cancelable: false }
+      );
+    }
+  },[fetchGlobalMessage])
+  //
+
+
+
+ 
 
   //Get player data, worlds data, and fight
   //If fight is null -> battle log and fight is not rendered.
@@ -71,6 +105,26 @@ const World = (props) => {
     }
   }, []);
 
+
+  const createThreeButtonAlert = () =>
+    Alert.alert(
+      "Alert Title",
+      "My Alert Msg",
+      [
+        {
+          text: "Ask me later",
+          onPress: () => console.log("Ask me later pressed")
+        },
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ],
+      { cancelable: false }
+    );
+
   //on swipe
   const onSwipe = (gestureName, gestureState) => {
     const { SWIPE_LEFT, SWIPE_RIGHT } = swipeDirections;
@@ -103,7 +157,7 @@ const World = (props) => {
 
       let timeout = setInterval(() => {
         setFightLogIndex(fightLogIndex + 1);
-      }, 600);
+      }, 700);
 
       useEffect(()=>{
         return () =>{
