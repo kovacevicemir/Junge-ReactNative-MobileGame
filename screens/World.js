@@ -158,7 +158,7 @@ const World = (props) => {
               />
               
               <Progress.Bar progress={progressPlayer} color="green" width={100} />
-              <Text style={styles.monsterAttackText}>
+              <Text style={mobAtt === 'Block!' ? styles.monsterAttackBlock : styles.monsterAttackText}>
                 {mobAtt}
               </Text>
             </View>
@@ -172,8 +172,8 @@ const World = (props) => {
               />
               
               <Progress.Bar progress={progressMob} color="green" width={100} />
-              <Text style={styles.playerAttackText}>
-                {playerAtt}
+              <Text style={playerAtt > 0 ? styles.playerAttackText : styles.playerAttackCrit}>
+                {playerAtt > 0 ? playerAtt : `${playerAtt *-1}!`}
               </Text>
             </View>
           </View>
@@ -346,5 +346,13 @@ const styles = StyleSheet.create({
   },
   fightResultStyle:{
     minHeight:50
+  },
+  playerAttackCrit:{
+    color:'red',
+    fontWeight:'800'
+  },
+  monsterAttackBlock:{
+    color:'#318fe8',
+    fontWeight:'700'
   }
 });

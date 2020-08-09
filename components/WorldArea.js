@@ -25,7 +25,6 @@ const WorldArea = (props) => {
 
   useEffect(() => {
     setMobs(randomMonsters);
-    console.log('doing change...',Math.random())
   }, [randomMonsters, fetching]);
 
   useEffect(() => {

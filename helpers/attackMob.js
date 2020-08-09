@@ -17,7 +17,22 @@ export const attackMob = (mob,player) =>{
 
     while(playerHpLeft >= 0 || mobHpLeft >= 0){
         //PLAYER ATTACK
-        fightLog.playerAttacks.push(player.attack)
+        //check if crit
+        let crit = Math.floor(Math.random() * 100) + 1;
+        // Math.floor(Math.random() * (max - min + 1)) + min;
+        let critMulti = Math.floor(Math.random() * (150 - 130 + 1)) + 130;
+        let attMulti = Math.floor(Math.random() * 5) + 1;
+        
+        let currentPlayerAtt;
+        if(crit < player.crit){
+            currentPlayerAtt = ((player.attack + (player.attack/100 * attMulti)) / 100) * -critMulti
+        }else{
+            currentPlayerAtt = player.attack + (player.attack/100 * attMulti)
+        }
+
+        currentPlayerAtt = Math.round(currentPlayerAtt);
+
+        fightLog.playerAttacks.push(currentPlayerAtt)
         mobHpLeft -= player.attack
         if(mobHpLeft <= 0){
             fightLog.monsterHp.push(0)
@@ -25,10 +40,24 @@ export const attackMob = (mob,player) =>{
         }else{
             fightLog.monsterHp.push(mobHpLeft)
         }
+
+        
         
 
         //MOB ATTACK
-        fightLog.monsterAttacks.push(mob.attack)
+        //check if block
+        let block = Math.floor(Math.random() * 100) + 1;
+        let currentMobAtt;
+        if(block < 75){
+            currentMobAtt = 'Block!'
+        }else{
+            currentMobAtt = mob.attack - player.deffense
+            if(currentMobAtt <0){
+                currentMobAtt = 1;
+            }
+        }
+        
+        fightLog.monsterAttacks.push(currentMobAtt)
         playerHpLeft -= mob.attack
         if(playerHpLeft <= 0){
             fightLog.playerHp.push(0)
