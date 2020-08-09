@@ -4,7 +4,6 @@
 export const getRandomMobs = (monsters,boss) =>{
 
     let rndNum = Math.floor(Math.random() * Math.floor(2))
-    console.log(rndNum)
 
     if(rndNum === 1){
         return monsters

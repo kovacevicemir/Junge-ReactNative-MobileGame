@@ -9,32 +9,43 @@ import {
   FlatList,
 } from "react-native";
 import Colors from "../assets/Colors";
-import {useDispatch} from 'react-redux'
-import * as WorldActions from '../store/actions/world'
+import { useDispatch } from "react-redux";
+import * as WorldActions from "../store/actions/world";
 
 const WorldArea = (props) => {
-  const { world, randomMonsters, fetching, player, fight } = props;
+  const { randomMonsters, fetching, player, fight } = props;
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [mobs, setMobs] = useState();
-  const [isFight, setIsFight] = useState(false)
+  const [isFight, setIsFight] = useState(false);
+
+  // console.log('----------------------')
+  // console.log('randomMonsters: ',randomMonsters.length)
 
   useEffect(() => {
     setMobs(randomMonsters);
-    fight ? setIsFight(true) : setIsFight(false)
-  }, [randomMonsters,fight]);
+    console.log('doing change...',Math.random())
+  }, [randomMonsters, fetching]);
 
-  const attackMonster = (mob,player) =>{
-      console.log('attackMonster method: ',player.nickname)
-      setIsFight(true)
-      console.log(mob.name)
-      dispatch(WorldActions.attackMob(mob,player))
-      console.log('dispatched!!!')
-  }
+  useEffect(() => {
+    fight ? setIsFight(true) : setIsFight(false);
+  }, [fight]);
+
+  const attackMonster = (mob, player, index) => {
+    setIsFight(true);
+    dispatch(WorldActions.attackMob(mob, player));
+
+    //delete mob
+    let newMobs;
+    newMobs = [...mobs];
+    newMobs.splice(index, 1);
+    setMobs(newMobs);
+  };
 
   const Mobbb = (props) => {
-    const { mob } = props;
+    const { mob, index } = props;
+
     return (
       <View style={styles.mobContainer}>
         <Image
@@ -43,7 +54,11 @@ const WorldArea = (props) => {
           source={{ uri: mob.image }}
         />
         <View style={styles.mobInfo}>
-          <Button color="#fff" title={mob.name} onPress={()=> attackMonster(mob,player)} />
+          <Button
+            color="#fff"
+            title={mob.name}
+            onPress={() => attackMonster(mob, player, index)}
+          />
           <Text style={{ color: "white" }}>Level: {mob.level}</Text>
         </View>
       </View>
@@ -54,19 +69,17 @@ const WorldArea = (props) => {
     return (
       <View style={styles.areaContainer}>
         <View style={styles.areaBottom}>
-            <Text style={styles.searchingText}>Searching area...</Text>
+          <Text style={styles.searchingText}>Searching area...</Text>
         </View>
       </View>
     );
   }
 
-  
-
   if (isFight) {
     return (
       <View style={styles.areaContainer}>
         <View style={styles.areaBottom}>
-            <Text style={styles.searchingText}>Fighting...</Text>
+          <Text style={styles.searchingText}>Fighting...</Text>
         </View>
       </View>
     );
@@ -79,7 +92,9 @@ const WorldArea = (props) => {
           <FlatList
             keyExtractor={(item, index) => index.toString()}
             data={mobs}
-            renderItem={(itemData) => <Mobbb mob={itemData.item} />}
+            renderItem={(itemData) => (
+              <Mobbb mob={itemData.item} index={itemData.index} />
+            )}
             style={{ flex: 1 }}
           />
         ) : (
@@ -121,8 +136,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  searchingText:{
-      color:Colors.primaryFont,
-      fontSize:16
-  }
+  searchingText: {
+    color: Colors.primaryFont,
+    fontSize: 16,
+  },
 });

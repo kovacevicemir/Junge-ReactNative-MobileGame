@@ -3,8 +3,6 @@
 
 export const attackMob = (mob,player) =>{
 
-    console.log('attackMob.js: ',mob.name ,player.nickname)
-
     let win;
     let fightLog = {
         playerAttacks: new Array(),

@@ -20,16 +20,34 @@ import GestureRecognizer, {
 import * as Progress from "react-native-progress";
 
 const World = (props) => {
+
+  //Get player data, worlds data, and fight
+  //If fight is null -> battle log and fight is not rendered.
   const fetchPlayer = useSelector((state) => state.user.player);
   const fetchWorlds = useSelector((state) => state.world.worlds);
   const fetchFight = useSelector((state) => state.world.fight);
+
   const [player, setPlayer] = useState();
+
+  //Get list of worlds and world data when enter World.js screen
   const [worlds, setWorlds] = useState();
+
+  //Get practicular world and world data on when user click on one of the world
   const [world, setWorld] = useState();
+
+  //storing random list of mobs or boss from  this world. (get random on enter world, and on swipe right)
   const [randomMonsters, setRandomMonsters] = useState();
+
+  //Searching area... in mobs section if true, if false show list of mobs
   const [generatingMobs, setGeneratingMobs] = useState(false);
+
+  //show fight log and battle
   const [fight, setFight] = useState();
+
+  //+1 index every second if attacked, fightLog..[index]
   const [fightLogIndex, setFightLogIndex] = useState(0);
+
+  //if null remove stop interval +1 index, and clear fightLog
   const [fightResult, setFightResult] = useState()
 
   useEffect(() => {
@@ -45,14 +63,9 @@ const World = (props) => {
     setFight(fetchFight);
   }, [fetchFight]);
 
-  // useEffect(()=>{
-  //   return () => {
-  //     clearTimeout(timer1)
-  //   }
-  // },[fightLogIndex])
-
   useEffect(() => {
     if (world) {
+      //Problem: when kill mobs it does not show monsters on swipe right array is empty in world. how ?
       setRandomMonsters(getRandomMobs(world.monsters, world.boss));
       setGeneratingMobs(false);
     }
@@ -66,12 +79,17 @@ const World = (props) => {
         setWorld(null);
         break;
       case SWIPE_RIGHT:
-        console.log("SWIPE ->>>");
+        
+        console.log('--->>> Swipe',Math.random())
         setGeneratingMobs(true);
-        setTimeout(() => {
+        let newMobs = getRandomMobs(world.monsters, world.boss)
+        setRandomMonsters(newMobs);
+
+        const timeout1 = setTimeout(() => {
           setGeneratingMobs(false);
-        }, 2000);
-        setRandomMonsters(getRandomMobs(world.monsters, world.boss));
+          clearTimeout(timeout1)
+        }, 1000);
+        
         break;
     }
   };
@@ -82,20 +100,13 @@ const World = (props) => {
 
   const RenderFight = () => {
     if (fight) {
-      // console.log(
-      //   'playerhp: ',fight.fightLog.playerHp,
-      //  'monster hp: ',fight.fightLog.monsterHp,
-      //  'playerAttacks: ',fight.fightLog.playerAttacks,
-      //  'monsterAttacks: ',fight.fightLog.monsterAttacks
-      //  )
 
       let timeout = setInterval(() => {
         setFightLogIndex(fightLogIndex + 1);
-      }, 1200);
+      }, 600);
 
       useEffect(()=>{
         return () =>{
-          console.log('CLEAR')
           clearInterval(timeout)
         }
       },[fightLogIndex])
@@ -228,7 +239,6 @@ const World = (props) => {
 
         {/* World Area */}
         <WorldArea
-          world={world}
           randomMonsters={randomMonsters}
           player={player}
           fetching={generatingMobs}
