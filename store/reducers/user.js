@@ -7,7 +7,7 @@ import {statsTotal} from '../../helpers/statsTotal'
 import {attackMob} from '../../helpers/attackMob'
 import {isLevelUp} from '../../helpers/isLevelUp'
 
-import {LOGIN, EQUIP, DELETE_ITEM, REMOVE_GLOBAL_MESSAGE} from '../actions/user'
+import {LOGIN, EQUIP, DELETE_ITEM, REMOVE_GLOBAL_MESSAGE, REDUCE_MANA} from '../actions/user'
 import {ATTACK_MOB} from '../actions/world'
 
 
@@ -34,6 +34,15 @@ export default (state = initialState, action) =>{
             return{
                 ...state,
                 globalMessage:null
+            }
+        
+        case REDUCE_MANA:
+            let updatedPlayer = {...state.player}
+            updatedPlayer.mana -= action.payload.mana
+
+            return{
+                ...state,
+                player:updatedPlayer
             }
 
         case LOGIN:
@@ -156,6 +165,7 @@ export default (state = initialState, action) =>{
                 let levelUpMessage = null;
                 if(levelUp){
                     updatedPlayer.level += 1;
+                    updatedPlayer.mana = 1000;
                     levelUpMessage = 'Congratz! LVL UP!!!' + updatedPlayer.level +1;
 
                 }

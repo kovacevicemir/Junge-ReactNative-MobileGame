@@ -48,7 +48,7 @@ export const attackMob = (mob,player) =>{
         //check if block
         let block = Math.floor(Math.random() * 100) + 1;
         let currentMobAtt;
-        if(block < 75){
+        if(block < player.block){
             currentMobAtt = 'Block!'
         }else{
             currentMobAtt = mob.attack - player.deffense

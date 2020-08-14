@@ -3,6 +3,7 @@ export const LOGIN = 'LOGIN'
 export const EQUIP = 'EQUIP'
 export const DELETE_ITEM = 'DELETE_ITEM'
 export const REMOVE_GLOBAL_MESSAGE = 'REMOVE_GLOBAL_MESSAGE'
+export const REDUCE_MANA = 'REDUCE_MANA'
 
 
 //USER ACTION CREATORS
@@ -20,4 +21,8 @@ export const deleteItem = (item) =>{
 
 export const removeGlobalMessage = () =>{
     return {type:REMOVE_GLOBAL_MESSAGE, payload:{}}
+}
+
+export const reduceMana = (mana) =>{
+    return {type:REDUCE_MANA, payload:{mana:mana}}
 }

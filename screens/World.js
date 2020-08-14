@@ -16,6 +16,7 @@ import HeaderButton from "../components/HeaderButton";
 import Colors from "../assets/Colors";
 import { useSelector, useDispatch } from "react-redux";
 import * as UserActions from '../store/actions/user'
+import * as WorldActions from '../store/actions/world'
 import GestureRecognizer, {
   swipeDirections,
 } from "react-native-swipe-gestures";
@@ -29,9 +30,6 @@ const World = (props) => {
   //global message
   const fetchGlobalMessage = useSelector((state) => state.user.globalMessage)
   const [message, setMessage] = useState()
-
-  console.log('globalMessage: ',fetchGlobalMessage)
-  
 
   useEffect(()=>{
     if(fetchGlobalMessage){
@@ -133,9 +131,30 @@ const World = (props) => {
         setWorld(null);
         break;
       case SWIPE_RIGHT:
-        
-        console.log('--->>> Swipe',Math.random())
+
+        //Check if player have enough mana
+        if(player.mana < world.manaMultiplier){
+          Alert.alert(
+            "You dont have enough mana!",
+            "You cannot explore area because you run out of mana. Your mana regenerates every hour, please come back later.",
+            [
+              {
+                text: "OK",
+                onPress: () => dispatch(UserActions.removeGlobalMessage()),
+                style: "cancel"
+              },
+            ],
+            { cancelable: false }
+          );
+
+          break;
+        }
+
         setGeneratingMobs(true);
+
+        //reduce mana
+        dispatch(UserActions.reduceMana(world.manaMultiplier))
+
         let newMobs = getRandomMobs(world.monsters, world.boss)
         setRandomMonsters(newMobs);
 

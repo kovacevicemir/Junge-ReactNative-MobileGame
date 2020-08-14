@@ -88,16 +88,26 @@ const WorldArea = (props) => {
     <View style={styles.areaContainer}>
       <View style={styles.areaBottom}>
         {mobs ? (
-          <FlatList
-            keyExtractor={(item, index) => index.toString()}
-            data={mobs}
-            renderItem={(itemData) => (
-              <Mobbb mob={itemData.item} index={itemData.index} />
+          <View>
+            {mobs.length == 0 && (
+              <Text style={styles.searchingText}>
+                Swipe right on picture to explore area...
+              </Text>
             )}
-            style={{ flex: 1 }}
-          />
+
+            <FlatList
+              keyExtractor={(item, index) => index.toString()}
+              data={mobs}
+              renderItem={(itemData) => (
+                <Mobbb mob={itemData.item} index={itemData.index} />
+              )}
+              style={{ flex: 1 }}
+            />
+          </View>
         ) : (
-          <Text>Fetching mobs...</Text>
+          <Text style={styles.searchingText}>
+            Swipe right on picture to explore area...
+          </Text>
         )}
       </View>
     </View>
