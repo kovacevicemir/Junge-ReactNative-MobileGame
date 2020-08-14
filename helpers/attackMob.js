@@ -1,6 +1,8 @@
 //INPUT monsters and player
 //OUTPUT win:true/false, drop, fightLog(simple)
 
+import {items} from '../data/dummy-data'
+
 export const attackMob = (mob,player) =>{
 
     let win;
@@ -72,7 +74,14 @@ export const attackMob = (mob,player) =>{
 
     //drop ?
     let rndNum = Math.floor(Math.random() * Math.floor(2))
-    let drop = rndNum === 0 ? 'DROP' : null
+    let drop;
+    if(rndNum === 0){
+        const droppedItem = items.find(item => item.id == mob.drop)
+        drop = droppedItem;
+    }else{
+        drop = null;
+    }
+
 
     const OUTPUT = {
         win:win,

@@ -257,7 +257,7 @@ const World = (props) => {
               <Text style={styles.battleResultFont}>exp: {fight.mob.exp}</Text>
               <Text style={styles.battleResultFont}>gold: {fight.mob.gold}</Text>
               {fight.drop &&
-              <Text style={styles.battleResultFont}>drop: <Text style={{color:'orange'}}>{fight.drop}</Text></Text> }
+              <Text style={styles.battleResultFont}>drop: <Text style={{color:'orange'}}>{fight.drop.name}</Text></Text> }
             </View>
           )
           :

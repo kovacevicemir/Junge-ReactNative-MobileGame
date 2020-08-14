@@ -156,8 +156,17 @@ export default (state = initialState, action) =>{
                 updatedPlayer.experience += result.mob.exp
                 updatedPlayer.gold += result.mob.gold
 
-                if(result.drop == 'DROP'){
-                    console.log('user.js reducer... here update inventory...')
+                console.log(result.drop)
+
+                if(result.drop != null){
+                    console.log('user.js reducer...', result.drop.name)
+
+                    //every time you drop something... you should generate unique item id...
+                    //this will be done inside user actions -> backend i guess
+                    let newDrop = {...result.drop}
+                    newDrop.id = newDrop.id + Math.random();
+
+                    newInventory.items.push(newDrop)
                 }
 
                 //check if level up
@@ -173,7 +182,8 @@ export default (state = initialState, action) =>{
                 return {
                     ...state,
                     player:updatedPlayer,
-                    globalMessage:levelUpMessage
+                    globalMessage:levelUpMessage,
+                    inventory:newInventory
                 }
 
                 

@@ -45,5 +45,5 @@ export const inventories = [
 export const worlds = [
     //id,name,levelRange,monsters,boss
     new World('w1','Mystic Forest','https://www.rainforest-alliance.org/sites/default/files/styles/900w/public/2019-07/misty%20forest%20ferns.jpg?itok=knEAi7E3','1-10',[mobs[0],mobs[1]],mobs[2],1),
-    new World('w2','Puma Mountain','https://lh3.googleusercontent.com/ioE2Vmd8tbo2_OlcIZ03zGVF8ezaiYG1L6BhEQ4Rl8xFJmgd-6jNSwInBc7qrhNx','10-20',[mobs[0],mobs[1],mobs[2],mobs[1],mobs[0],mobs[1],mobs[2],mobs[1]],mobs[2],1)
+    new World('w2','Puma Mountain','https://lh3.googleusercontent.com/ioE2Vmd8tbo2_OlcIZ03zGVF8ezaiYG1L6BhEQ4Rl8xFJmgd-6jNSwInBc7qrhNx','10-20',[mobs[0],mobs[1],mobs[2],mobs[1],mobs[0],mobs[1],mobs[2],mobs[1]],mobs[2],2)
 ]
