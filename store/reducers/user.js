@@ -7,7 +7,7 @@ import {statsTotal} from '../../helpers/statsTotal'
 import {attackMob} from '../../helpers/attackMob'
 import {isLevelUp} from '../../helpers/isLevelUp'
 
-import {LOGIN, EQUIP, DELETE_ITEM, REMOVE_GLOBAL_MESSAGE, REDUCE_MANA} from '../actions/user'
+import {LOGIN, EQUIP, DELETE_ITEM, REMOVE_GLOBAL_MESSAGE, REDUCE_MANA, SELL_ITEM} from '../actions/user'
 import {ATTACK_MOB} from '../actions/world'
 
 
@@ -146,6 +146,29 @@ export default (state = initialState, action) =>{
                 ...state,
                 inventory:newInventory
             }
+
+        case SELL_ITEM:
+            console.log('PAY LO A D ',action.payload)
+            //Remove item from inventory
+        
+            const newInventory1 = {...state.inventory}
+            const inventoryItems1 = newInventory1.items
+            const UpdatedInventoryItems1 = inventoryItems1.filter(item => {
+                return item.id != action.payload.id}
+            )
+            newInventory1.items = [...UpdatedInventoryItems1];
+            console.log(newInventory1)
+
+            //add gold to player
+            const newPlayer = {...state.player}
+            newPlayer.gold += action.payload.gold
+
+            return{
+                ...state,
+                player:newPlayer,
+                inventory:newInventory1
+            }
+            
                         
         case ATTACK_MOB:
             const result = attackMob(action.payload.mob,action.payload.player)

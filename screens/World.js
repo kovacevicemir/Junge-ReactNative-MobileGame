@@ -329,8 +329,26 @@ const World = (props) => {
         key={world.id}
         title={`${world.name} (${world.levelRange}) LVL`}
         onPress={() => {
-          setWorld(world);
-          setRandomMonsters(getRandomMobs(world.monsters, world.boss));
+          //check if enough mana
+          if(player.mana < world.manaMultiplier){
+            Alert.alert(
+              "You dont have enough mana!",
+              "You cannot explore area because you run out of mana. Your mana regenerates every hour, please come back later.",
+              [
+                {
+                  text: "OK",
+                  onPress: () => dispatch(UserActions.removeGlobalMessage()),
+                  style: "cancel"
+                },
+              ],
+              { cancelable: false }
+            );
+          }else{
+            dispatch(UserActions.reduceMana(world.manaMultiplier))
+            setWorld(world);
+            setRandomMonsters(getRandomMobs(world.monsters, world.boss));
+          }
+          
         }}
       />
     );

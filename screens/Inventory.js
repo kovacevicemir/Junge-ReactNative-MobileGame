@@ -9,7 +9,6 @@ import {
   Image,
   TouchableOpacity,
   Alert,
-  Modal,
   TouchableHighlight,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -18,12 +17,15 @@ import Colors from "../assets/Colors";
 import { useSelector, useDispatch } from "react-redux";
 import ItemDetails from "../components/ItemDetails";
 import * as UserActions from "../store/actions/user";
+import Modal from "../components/Modal";
 
 const Inventory = (props) => {
   const fetchInventory = useSelector((state) => state.user.inventory);
   const [inventory, setInventory] = useState();
   const [modalVisible, setModalVisible] = useState(false);
-  const [clickedThing, setClickedThing] = useState();
+  const [modalVisible1, setModalVisible1] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
+  const [clickedThing, setClickedThing] = useState({});
 
   const dispatch = useDispatch();
 
@@ -43,6 +45,22 @@ const Inventory = (props) => {
     setModalVisible(false);
   };
 
+  const SellItemHandler = (item) => {
+    //call delete action
+    dispatch(UserActions.sellItem(item));
+
+    //modal
+    setModalVisible1(false);
+  };
+
+  const UpgradeItemHandler = (item) => {
+    //call delete action
+    dispatch(UserActions.sellItem(item));
+
+    //modal
+    setModalVisible1(false);
+  };
+
   return (
     <View style={styles.inventoryContainer}>
       {inventory ? (
@@ -50,7 +68,13 @@ const Inventory = (props) => {
           data={inventory.items}
           style={styles.flatList}
           renderItem={(itemData) => (
-            <View style={styles.itemFrame}>
+            <TouchableOpacity
+              style={styles.itemFrame}
+              onPress={() => {
+                setClickedThing(itemData.item);
+                setModalVisible2(true);
+              }}
+            >
               <ItemDetails
                 clickedThing={itemData.item}
                 fontColor={Colors.primaryFont}
@@ -63,12 +87,19 @@ const Inventory = (props) => {
                 <Button
                   title="Delete"
                   onPress={() => {
-                    setClickedThing(itemData.item)
-                    setModalVisible(true)
+                    setClickedThing(itemData.item);
+                    setModalVisible(true);
+                  }}
+                />
+                <Button
+                  title="Sell"
+                  onPress={() => {
+                    setClickedThing(itemData.item);
+                    setModalVisible1(true);
                   }}
                 />
               </View>
-            </View>
+            </TouchableOpacity>
           )}
         ></FlatList>
       ) : (
@@ -77,38 +108,29 @@ const Inventory = (props) => {
 
       {/* MODAL FOR ITEM OR PET */}
       <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text>Deleting item</Text>
-            <View style={styles.actionButtons}>
-            <TouchableHighlight
-              style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}
-            >
-              <Text style={styles.textStyle}>Close</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
-              style={{ ...styles.openButton, backgroundColor: "#d9534f" }}
-              onPress={() => {
-                DeleteItemHandler(clickedThing)
-              }}
-            >
-              <Text style={styles.textStyle}>Delete</Text>
-            </TouchableHighlight>
-            </View>
-            
-          </View>
-        </View>
-      </Modal>
+        heading="Delete item"
+        buttonText="Delete"
+        actionHandler={DeleteItemHandler}
+        clickedThing={clickedThing}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
+      <Modal
+        heading="Sell item ?"
+        buttonText="Sell"
+        actionHandler={SellItemHandler}
+        clickedThing={clickedThing}
+        modalVisible={modalVisible1}
+        setModalVisible={setModalVisible2}
+      />
+      <Modal
+        heading="Upgrade item ?"
+        buttonText="Upgrade"
+        actionHandler={SellItemHandler}
+        clickedThing={clickedThing}
+        modalVisible={modalVisible2}
+        setModalVisible={setModalVisible2}
+      />
     </View>
   );
 };
@@ -175,7 +197,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    marginHorizontal:5
+    marginHorizontal: 5,
   },
   textStyle: {
     color: "white",
@@ -186,8 +208,8 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "center",
   },
-  actionButtons:{
-    flexDirection:'row',
-    margin:10
-  }
+  actionButtons: {
+    flexDirection: "row",
+    margin: 10,
+  },
 });

@@ -30,7 +30,8 @@ const ProfileNavigation = createStackNavigator(
 const InventoryNavigation = createStackNavigator(
     {
       Inventory:Inventory,
-      Home:Homepage
+      Home:Homepage,
+      Shop:Shop
     },
     {
       defaultNavigationOptions: {

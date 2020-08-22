@@ -7,6 +7,10 @@ const Homepage = (props) => {
     return (
         <View>
             <Text>Homepage</Text>
+            <Text>Shop(in future)</Text>
+            <Text>Market(in future)</Text>
+            <Text>Player ranking(comming soon!)</Text>
+            <Text>This is open beta v1.0 Jungle</Text>
         </View>
     )
 }
