@@ -5,6 +5,7 @@ export const DELETE_ITEM = 'DELETE_ITEM'
 export const REMOVE_GLOBAL_MESSAGE = 'REMOVE_GLOBAL_MESSAGE'
 export const REDUCE_MANA = 'REDUCE_MANA'
 export const SELL_ITEM = 'SELL_ITEM'
+export const UPGRADE_ITEM = 'UPGRADE_ITEM'
 
 
 //USER ACTION CREATORS
@@ -22,6 +23,10 @@ export const deleteItem = (item) =>{
 
 export const sellItem = (item) =>{
     return {type:SELL_ITEM, payload:item}
+}
+
+export const upgradeItem =(item) =>{
+    return {type:UPGRADE_ITEM, payload:item}
 }
 
 export const removeGlobalMessage = () =>{

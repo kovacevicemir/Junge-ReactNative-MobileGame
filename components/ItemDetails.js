@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native'
 
 const ItemDetails = (props) => {
     const {clickedThing,fontColor} = props
@@ -25,7 +25,7 @@ const ItemDetails = (props) => {
     //ITEM
     return (
         <View style={styles.itemContainer}>
-            <Image style={styles.imageContainer} source={{uri:clickedThing.image}} />
+            <ImageBackground style={styles.imageContainer} source={{uri:clickedThing.image}} />
             <Text style={{color:fontColor}}>{clickedThing.name}</Text>
             <Text style={{color:fontColor}}>Attack:{clickedThing.attack}</Text>
             <Text style={{color:fontColor}}>Deffense:{clickedThing.deffense}</Text>

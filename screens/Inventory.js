@@ -55,7 +55,7 @@ const Inventory = (props) => {
 
   const UpgradeItemHandler = (item) => {
     //call delete action
-    dispatch(UserActions.sellItem(item));
+    dispatch(UserActions.upgradeItem(item));
 
     //modal
     setModalVisible1(false);
@@ -72,7 +72,12 @@ const Inventory = (props) => {
               style={styles.itemFrame}
               onPress={() => {
                 setClickedThing(itemData.item);
-                setModalVisible2(true);
+
+                //check if its item, pet cannot be upgraded!
+                if(!itemData.item.exp){
+                  setModalVisible2(true);
+                }
+
               }}
             >
               <ItemDetails
@@ -126,7 +131,8 @@ const Inventory = (props) => {
       <Modal
         heading="Upgrade item ?"
         buttonText="Upgrade"
-        actionHandler={SellItemHandler}
+        modalType="upgrade"
+        actionHandler={UpgradeItemHandler}
         clickedThing={clickedThing}
         modalVisible={modalVisible2}
         setModalVisible={setModalVisible2}

@@ -6,8 +6,9 @@ import {items} from '../../data/dummy-data'
 import {statsTotal} from '../../helpers/statsTotal'
 import {attackMob} from '../../helpers/attackMob'
 import {isLevelUp} from '../../helpers/isLevelUp'
+import {upgradeItem} from '../../helpers/upgradeItem'
 
-import {LOGIN, EQUIP, DELETE_ITEM, REMOVE_GLOBAL_MESSAGE, REDUCE_MANA, SELL_ITEM} from '../actions/user'
+import {LOGIN, EQUIP, DELETE_ITEM, REMOVE_GLOBAL_MESSAGE, REDUCE_MANA, SELL_ITEM, UPGRADE_ITEM} from '../actions/user'
 import {ATTACK_MOB} from '../actions/world'
 
 
@@ -140,7 +141,6 @@ export default (state = initialState, action) =>{
                 return item.id != action.payload.id}
             )
             newInventory.items = [...UpdatedInventoryItems];
-            console.log(newInventory)
 
             return{
                 ...state,
@@ -148,7 +148,6 @@ export default (state = initialState, action) =>{
             }
 
         case SELL_ITEM:
-            console.log('PAY LO A D ',action.payload)
             //Remove item from inventory
         
             const newInventory1 = {...state.inventory}
@@ -157,7 +156,6 @@ export default (state = initialState, action) =>{
                 return item.id != action.payload.id}
             )
             newInventory1.items = [...UpdatedInventoryItems1];
-            console.log(newInventory1)
 
             //add gold to player
             const newPlayer = {...state.player}
@@ -168,6 +166,38 @@ export default (state = initialState, action) =>{
                 player:newPlayer,
                 inventory:newInventory1
             }
+
+        case UPGRADE_ITEM:
+            if(action.payload){
+                console.log(action.payload)
+                let afterUpgrade = upgradeItem(action.payload);
+
+                if(afterUpgrade == 'maxtier'){
+                    return state;
+                } 
+    
+                const newInventory = {...state.inventory}
+                const inventoryItems = newInventory.items
+
+                const newInventoryItems = inventoryItems.map(item => {
+                    if(item.id === action.payload.id){
+                        return afterUpgrade;
+                    }else{
+                        return item;
+                    }
+                })
+    
+                newInventory.items = newInventoryItems;
+    
+                return {
+                    ...state,
+                    inventory:newInventory
+                }
+            }else{
+                return state;
+            }
+
+
             
                         
         case ATTACK_MOB:

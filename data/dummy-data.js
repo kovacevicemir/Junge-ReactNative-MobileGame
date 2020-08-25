@@ -6,11 +6,11 @@ import Inventory from '../models/Inventory'
 import World from '../models/World'
 
 export const items = [
-    //id,name,attack,deffense,block,critical,level,upgrade,image,gold
-    new Item('i1','Axe',12,0,0,5,1,1,'https://lh3.googleusercontent.com/-CJHeNzSEHkE/WqHJ28G5f7I/AAAAAAAAA0c/ht3V5_iHI3s6Sh5Uu5xj9u8xf6YnzuW-ACLcBGAs/h190/Small+Axe.png', 1, 'weapon'),
-    new Item('i5','AxeInventory',15,0,0,6,2,2,'https://wiki.guildwars.com/images/f/f2/Spiked_Axe.jpg', 1, 'weapon'),
-    new Item('i2','Armor',2,4,2,2,1,1,'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT5BgWPwDJCWwvDrxHTAQ4PvmsTgP3vK2t72A&usqp=CAU', 1, 'armor'),
-    new Item('i3','Shield',0,7,3,0,1,1,'https://www.mubufon.com/wp-content/uploads/2019/12/img_shield_kiteshield.jpg', 1, 'shield')
+    //id,name,attack,deffense,block,critical,level,upgrade,image,gold,type
+    new Item('i1','Axe',12,0,0,5,1,0,'https://lh3.googleusercontent.com/-CJHeNzSEHkE/WqHJ28G5f7I/AAAAAAAAA0c/ht3V5_iHI3s6Sh5Uu5xj9u8xf6YnzuW-ACLcBGAs/h190/Small+Axe.png', 1, 'weapon'),
+    new Item('i5','AxeInventory',15,0,0,6,2,0,'https://wiki.guildwars.com/images/f/f2/Spiked_Axe.jpg', 1, 'weapon'),
+    new Item('i2','Armor',2,4,2,2,1,0,'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT5BgWPwDJCWwvDrxHTAQ4PvmsTgP3vK2t72A&usqp=CAU', 1, 'armor'),
+    new Item('i3','Shield',0,7,3,0,1,0,'https://www.mubufon.com/wp-content/uploads/2019/12/img_shield_kiteshield.jpg', 1, 'shield')
 ]
 
 export const mobs = [
