@@ -21,6 +21,7 @@ import GestureRecognizer, {
   swipeDirections,
 } from "react-native-swipe-gestures";
 import * as Progress from "react-native-progress";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 
 const World = (props) => {
@@ -326,8 +327,9 @@ const World = (props) => {
   // new World('w1','Mystic Forest','1-10',[mobs[0],mobs[1]],mobs[3])
   const renderWorlds = worlds.map((world) => {
     return (
-      <Button
+      <TouchableOpacity
         key={world.id}
+        style={styles.worldAreaButton}
         title={`${world.name} (${world.levelRange}) LVL`}
         onPress={() => {
           //check if enough mana
@@ -351,15 +353,20 @@ const World = (props) => {
           }
           
         }}
-      />
+      >
+        <Text style={styles.gamingFontNormal}>
+        {world.name}
+        {world.levelRange} LVL
+        </Text>
+      </TouchableOpacity>
     );
   });
 
   return (
-    <View style={styles.worldContainer}>
-      <Text>WORLD</Text>
+    <ImageBackground source={{uri:"https://nicolekennedydesign.files.wordpress.com/2012/10/rainforest_large.jpg"}} style={styles.worldContainer}>
+      <Text style={styles.gamingFontBig}>J U N G L E</Text>
       {renderWorlds}
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -369,7 +376,7 @@ World.navigationOptions = (navData) => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Home"
-          iconName={Platform.OS === "android" ? "home" : "ios-home"}
+          iconName={Platform.OS === "android" ? "help-circle" : "ios-help-circle"}
           onPress={() => {
             navData.navigation.navigate("Home");
           }}
@@ -401,8 +408,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   worldTitle: {
-    fontSize: 16,
+    fontSize: 22,
     color: Colors.primaryFont,
+    fontFamily:"Gaming"
   },
   battleResultFont:{
     color:'yellow'
@@ -446,5 +454,21 @@ const styles = StyleSheet.create({
   monsterAttackBlock:{
     color:'#318fe8',
     fontWeight:'700'
+  },
+  gamingFontNormal:{
+    color:Colors.primaryFont,
+    fontFamily: "Gaming",
+    fontSize:16
+  },
+  gamingFontBig:{
+    color:Colors.primaryFont,
+    fontFamily: "Gaming",
+    fontSize:30
+  },
+  worldAreaButton:{
+    backgroundColor:'black',
+    padding:10,
+    margin:5,
+    borderRadius:3
   }
 });

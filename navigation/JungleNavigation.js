@@ -72,7 +72,7 @@ const JungleBottom = createBottomTabNavigator(
         },
 
       },
-      Inventory: {
+      Backpack: {
         screen: InventoryNavigation,
         navigationOptions: {
           tabBarIcon: (tabInfo) => {
@@ -82,12 +82,12 @@ const JungleBottom = createBottomTabNavigator(
           },
         },
       },
-      World: {
+      Jungle: {
         screen: WorldNavigation,
         navigationOptions: {
           tabBarIcon: (tabInfo) => {
             return (
-              <Ionicons name="ios-business" size={25} color={tabInfo.tintColor} />
+              <Ionicons name="ios-paw" size={25} color={tabInfo.tintColor} />
             );
           },
           

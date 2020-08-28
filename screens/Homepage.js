@@ -77,7 +77,7 @@ Homepage.navigationOptions = (navData) => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Home"
-          iconName={Platform.OS === "android" ? "home" : "ios-home"}
+          iconName={Platform.OS === "android" ? "help-circle" : "ios-help-circle"}
           onPress={() => {
             navData.navigation.navigate("Home");
             console.log("HOMEPAGE!");

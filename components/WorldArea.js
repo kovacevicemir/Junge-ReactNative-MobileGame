@@ -11,6 +11,7 @@ import {
 import Colors from "../assets/Colors";
 import { useDispatch } from "react-redux";
 import * as WorldActions from "../store/actions/world";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const WorldArea = (props) => {
   const { randomMonsters, fetching, player, fight, world } = props;
@@ -53,11 +54,13 @@ const WorldArea = (props) => {
           source={{ uri: mob.image }}
         />
         <View style={styles.mobInfo}>
-          <Button
+          <TouchableOpacity
             color="#fff"
             title={mob.name}
             onPress={() => attackMonster(mob, player, index)}
-          />
+          >
+            <Text style={styles.gamingFontNormal}>{mob.name}</Text>
+          </TouchableOpacity>
           <Text style={{ color: "white" }}>Level: {mob.level}</Text>
         </View>
       </View>
@@ -90,9 +93,14 @@ const WorldArea = (props) => {
         {mobs ? (
           <View>
             {mobs.length == 0 && (
-              <Text style={styles.searchingText}>
-                Swipe right on picture to explore area...
-              </Text>
+              <View style={styles.swipeMessageContainer}>
+                <Text style={styles.gamingFontBig}>
+                  Swipe right on picture to explore area...
+                </Text>
+                <Text style={styles.gamingFontBig}>
+                  Swipe left to change world area...
+                </Text>
+            </View>
             )}
 
             <FlatList
@@ -105,9 +113,14 @@ const WorldArea = (props) => {
             />
           </View>
         ) : (
-          <Text style={styles.searchingText}>
-            Swipe right on picture to explore area...
-          </Text>
+          <View style={styles.swipeMessageContainer}>
+            <Text style={styles.searchingText}>
+              Swipe right on picture to explore area...
+            </Text>
+            <Text style={styles.searchingText}>
+              Swipe left to change world area...
+            </Text>
+          </View>
         )}
       </View>
     </View>
@@ -134,12 +147,18 @@ const styles = StyleSheet.create({
   mobImage: {
     width: 40,
     height: 40,
+    borderRadius: 3,
+    marginRight: 5,
   },
   mobContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    margin: 20,
+    margin: 10,
+    borderRadius:5,
+    borderColor:'red',
+    borderWidth:1,
+    padding:5
   },
   mobInfo: {
     justifyContent: "center",
@@ -148,5 +167,21 @@ const styles = StyleSheet.create({
   searchingText: {
     color: Colors.primaryFont,
     fontSize: 16,
+    marginTop: 25,
   },
+  gamingFontNormal: {
+    color: Colors.primaryFont,
+    fontFamily: "Gaming",
+    fontSize: 16,
+  },
+  gamingFontBig: {
+    color: Colors.primaryFont,
+    fontFamily: "Gaming",
+    fontSize: 20,
+  },
+  swipeMessageContainer:{
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center'
+  }
 });
