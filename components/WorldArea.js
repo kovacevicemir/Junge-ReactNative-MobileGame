@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import * as WorldActions from "../store/actions/world";
 
 const WorldArea = (props) => {
-  const { randomMonsters, fetching, player, fight } = props;
+  const { randomMonsters, fetching, player, fight, world } = props;
 
   const dispatch = useDispatch();
 
@@ -33,7 +33,7 @@ const WorldArea = (props) => {
 
   const attackMonster = (mob, player, index) => {
     setIsFight(true);
-    dispatch(WorldActions.attackMob(mob, player));
+    dispatch(WorldActions.attackMob(mob, player, world.levelRange));
 
     //delete mob
     let newMobs;

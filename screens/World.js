@@ -35,7 +35,7 @@ const World = (props) => {
     if(fetchGlobalMessage){
       Alert.alert(
         "LEVEL UP!",
-        "Congrationlations!",
+        fetchGlobalMessage,
         [
           {
             text: "OK",
@@ -316,6 +316,7 @@ const World = (props) => {
           player={player}
           fetching={generatingMobs}
           fight={fight}
+          world={world}
         />
         {/* World Area end */}
       </View>

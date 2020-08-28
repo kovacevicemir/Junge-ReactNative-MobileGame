@@ -62,7 +62,7 @@ const MyModal = ({
     const fetchPlayer = useSelector((state) => state.user.player);
     let upgradeAllowed = true;
     if (fetchPlayer.gold < upgradeCost) {
-      upgradeAllowed = false;
+      upgradeAllowed = true;
     }
 
     return (

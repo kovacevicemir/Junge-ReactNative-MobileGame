@@ -1,8 +1,11 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native'
+import Colors from "../assets/Colors";
+import { render } from 'react-dom'
 
 const ItemDetails = (props) => {
     const {clickedThing,fontColor} = props
+
 
     if(clickedThing.exp){
         // PET
@@ -22,11 +25,24 @@ const ItemDetails = (props) => {
 
     }
 
+    const ItemUpgradesComponent = () => {
+        let something = new Array();
+        for(let i = 0; i < clickedThing.upgrade; i++){
+            something.push(<Image style={styles.tiersIconImage} source={{uri:Colors.ItemTiers[i]}} />)
+        }
+
+        console.log(something)
+        return something
+    }
+
     //ITEM
     return (
         <View style={styles.itemContainer}>
             <ImageBackground style={styles.imageContainer} source={{uri:clickedThing.image}} />
             <Text style={{color:fontColor}}>{clickedThing.name}</Text>
+            <View style={styles.itemUpgrades}>
+                <ItemUpgradesComponent />
+            </View>
             <Text style={{color:fontColor}}>Attack:{clickedThing.attack}</Text>
             <Text style={{color:fontColor}}>Deffense:{clickedThing.deffense}</Text>
             <Text style={{color:fontColor}}>Critical:{clickedThing.critical}%</Text>
@@ -48,5 +64,13 @@ const styles = StyleSheet.create({
     imageContainerPet:{
         minHeight:175,
         minWidth:175
+    },
+    itemUpgrades:{
+        display:"flex",
+        flexDirection:"row"
+    },
+    tiersIconImage:{
+        minHeight:20,
+        minWidth:20
     },
 })

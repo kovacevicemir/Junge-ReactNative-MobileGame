@@ -6,6 +6,7 @@ import {items} from '../../data/dummy-data'
 import {statsTotal} from '../../helpers/statsTotal'
 import {attackMob} from '../../helpers/attackMob'
 import {isLevelUp} from '../../helpers/isLevelUp'
+import {isLevelUpPet} from '../../helpers/isLevelUpPet'
 import {upgradeItem} from '../../helpers/upgradeItem'
 
 import {LOGIN, EQUIP, DELETE_ITEM, REMOVE_GLOBAL_MESSAGE, REDUCE_MANA, SELL_ITEM, UPGRADE_ITEM} from '../actions/user'
@@ -53,7 +54,7 @@ export default (state = initialState, action) =>{
         case EQUIP:
 
             //If equiping item
-            if(action.payload.upgrade){
+            if(action.payload.type != undefined){
                 //Remove item from inventory
                 const newInventory = {...state.inventory}
                 const inventoryItems = newInventory.items
@@ -169,7 +170,6 @@ export default (state = initialState, action) =>{
 
         case UPGRADE_ITEM:
             if(action.payload){
-                console.log(action.payload)
                 let afterUpgrade = upgradeItem(action.payload);
 
                 if(afterUpgrade == 'maxtier'){
@@ -209,10 +209,8 @@ export default (state = initialState, action) =>{
                 updatedPlayer.experience += result.mob.exp
                 updatedPlayer.gold += result.mob.gold
 
-                console.log(result.drop)
-
                 if(result.drop != null){
-                    console.log('user.js reducer...', result.drop.name)
+                    console.log('user.js reducer drop:', result.drop.name)
 
                     //every time you drop something... you should generate unique item id...
                     //this will be done inside user actions -> backend i guess
@@ -228,8 +226,29 @@ export default (state = initialState, action) =>{
                 if(levelUp){
                     updatedPlayer.level += 1;
                     updatedPlayer.mana = 1000;
-                    levelUpMessage = 'Congratz! LVL UP!!!' + updatedPlayer.level +1;
+                    levelUpMessage = 'Congratz! LVL UP ' + updatedPlayer.level + ' !';
 
+                }
+
+                //add pet exp
+                if(updatedPlayer.pet.exp < 10000){
+                    updatedPlayer.pet.exp += action.payload.petExpMultiplier;
+                }
+
+                //check for pet level
+                let petLevelCheck = isLevelUpPet(updatedPlayer.pet);
+                if(petLevelCheck !== null){
+                    updatedPlayer.pet = petLevelCheck;
+                    if(levelUpMessage !== null){
+                        levelUpMessage = levelUpMessage + "\n Pet level up " + petLevelCheck.level  +" !";
+                    }else{
+                        levelUpMessage = "Pet level up " + petLevelCheck.level  +" !";
+                    }
+                }
+
+                //update player stats if pet lvl up or player lvl up
+                if(levelUp === true || petLevelCheck){
+                    updatedPlayer = statsTotal(updatedPlayer);
                 }
 
                 return {
