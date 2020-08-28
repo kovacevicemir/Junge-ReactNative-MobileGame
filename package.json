@@ -31,5 +31,8 @@
     "web": "expo web",
     "eject": "expo eject"
   },
+  "rnpm": {
+    "assets": ["./assets"]
+  },
   "private": true
 }

@@ -45,14 +45,13 @@ const Profile = (props) => {
                 uri: player.image,
               }}
             />
-            <Text style={{color:Colors.primaryFont}}>{player.profileStatus}</Text>
           </View>
           {/* Profile details */}
           <View style={styles.profileDetails}>
-            <Text style={{color:Colors.primaryFont}}>{player.nickname}</Text>
-            <Text style={{color:Colors.primaryFont}}>Level: {player.level}</Text>
-            <Text style={{color:Colors.primaryFont}}>Experience: {player.experience}</Text>
-            <Text style={{color:Colors.primaryFont}}>Gold: {player.gold}</Text>
+            <Text style={styles.gamingFontBig}>{player.nickname}</Text>
+            <Text style={styles.gamingFontNormal}>Level: {player.level}</Text>
+            <Text style={styles.gamingFontNormal}>Experience: {player.experience}</Text>
+            <Text style={styles.gamingFontNormal}>Gold: {player.gold}</Text>
           </View>
         </View>
 
@@ -116,19 +115,19 @@ const Profile = (props) => {
           >
             <Image style={styles.petPicture} key={player.pet.id} source={{ uri: player.pet.image }} />
             <View style={styles.petName}>
-              <Text>Pet: {player.pet.name}</Text>
+              <Text style={styles.petName}>{player.pet.name}</Text>
             </View>
           </TouchableOpacity>
 
           {/* playerStatus */}
           <View style={styles.playerStatus}>
-            <Text style={{color:Colors.primaryFont}}>PLAYER SUMMARY</Text>
-            <Text style={{color:Colors.primaryFont}}>Attack: {player.attack}</Text>
-            <Text style={{color:Colors.primaryFont}}>Deffense: {player.deffense}</Text>
-            <Text style={{color:Colors.primaryFont}}>Health Points: {player.hp}</Text>
-            <Text style={{color:Colors.primaryFont}}>Critical: {player.crit}%</Text>
-            <Text style={{color:Colors.primaryFont}}>Block: {player.block}%</Text>
-            <Text style={{color:Colors.primaryFont}}>Mana: {player.hourMana} per hour</Text>
+            <Text style={styles.gamingFontBig}>PLAYER SUMMARY</Text>
+            <Text style={styles.gamingFontNormal}>Attack: {player.attack}</Text>
+            <Text style={styles.gamingFontNormal}>Deffense: {player.deffense}</Text>
+            <Text style={styles.gamingFontNormal}>Health Points: {player.hp}</Text>
+            <Text style={styles.gamingFontNormal}>Critical: {player.crit}%</Text>
+            <Text style={styles.gamingFontNormal}>Block: {player.block}%</Text>
+            <Text style={styles.gamingFontNormal}>Mana: {player.hourMana} per hour</Text>
           </View>
         </View>
       </ScrollView>
@@ -152,7 +151,7 @@ const Profile = (props) => {
               ></ItemDetails>
 
               <TouchableHighlight
-                style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                style={{ ...styles.openButton, backgroundColor: "rgb(235, 108, 108)" }}
                 onPress={() => {
                   setModalVisible(!modalVisible);
                 }}
@@ -199,6 +198,7 @@ Profile.navigationOptions = (navData) => {
         />
       </HeaderButtons>
     ),
+    
   };
 };
 
@@ -214,16 +214,20 @@ const styles = StyleSheet.create({
   profilePicture: {
     width: 170,
     height: 150,
+    borderRadius:8
   },
   topSection: {
     flex: 1,
     flexDirection: "row",
+    justifyContent: "space-evenly",
+    marginHorizontal:'10%'
   },
   profileDetails: {
-    marginLeft: 10,
+    marginLeft: 50,
     marginBottom: 20,
-    justifyContent: "space-between",
-    minWidth: 170,
+    justifyContent: "center",
+    alignItems:'flex-start',
+    minWidth: 100,
   },
   midSection: {
     marginTop: 35,
@@ -237,6 +241,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 150,
     backgroundColor: "white",
+    borderRadius:5
   },
   armor: {
     width: 120,
@@ -244,41 +249,50 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     marginLeft: 10,
     marginRight: 10,
+    borderRadius:5
   },
   shield: {
     width: 100,
     height: 150,
     backgroundColor: "white",
+    borderRadius:5
   },
   bottomSection: {
     marginTop: 40,
+    paddingHorizontal:'5%',
     flex: 1,
     flexDirection: "row",
     width: "100%",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
   },
   pet: {
-    width: 130,
-    height: 130,
-    backgroundColor: "white",
+    width: 85,
+    height: 102,
+    backgroundColor: "black",
+    marginLeft:'10%',
+    borderRadius:5
   },
   petPicture: {
-    width: 130,
-    height: 110,
+    width: 85,
+    height: 85,
+    borderRadius:5
   },
   petName: {
     justifyContent: "center",
     alignItems: "center",
+    color:'orange',
+    fontFamily: "Gaming",
   },
   playerStatus: {
     width: 200,
     height: 130,
-    marginLeft: 10,
+    marginLeft: '10%',
     marginRight: 10,
   },
   itemImage: {
     flex: 1,
+    borderRadius:5
   },
   centeredView: {
     flex: 1,
@@ -288,7 +302,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: "rgb(29,23,25)",
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
@@ -303,8 +317,9 @@ const styles = StyleSheet.create({
   },
   openButton: {
     backgroundColor: "#F194FF",
-    borderRadius: 20,
-    padding: 10,
+    borderRadius: 10,
+    marginTop:10,
+    padding: 5,
     elevation: 2,
   },
   textStyle: {
@@ -316,4 +331,14 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: "center",
   },
+  gamingFontNormal:{
+    color:Colors.primaryFont,
+    fontFamily: "Gaming",
+    fontSize:16
+  },
+  gamingFontBig:{
+    color:Colors.primaryFont,
+    fontFamily: "Gaming",
+    fontSize:20
+  }
 });

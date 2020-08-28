@@ -12,18 +12,22 @@ import Inventory from "../screens/Inventory"
 import Colors from "../assets/Colors"
 import { Ionicons } from "@expo/vector-icons";
 
+'#161616'
+
+const defNavOptions = {
+  headerStyle: {
+    backgroundColor: Platform.OS === "android" ? Colors.primary : '#161616',
+  },
+  headerTintColor: Platform.OS === "android" ? "white" : '',
+}
+
 const ProfileNavigation = createStackNavigator(
   {
     Profile:Profile,
     Home:Homepage
   },
   {
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: Platform.OS === "android" ? Colors.primary : "",
-      },
-      headerTintColor: Platform.OS === "android" ? "white" : Colors.primary,
-    },
+    defaultNavigationOptions: defNavOptions
   }
 );
 
@@ -34,12 +38,7 @@ const InventoryNavigation = createStackNavigator(
       Shop:Shop
     },
     {
-      defaultNavigationOptions: {
-        headerStyle: {
-          backgroundColor: Platform.OS === "android" ? Colors.primary : "",
-        },
-        headerTintColor: Platform.OS === "android" ? "white" : Colors.primary,
-      },
+      defaultNavigationOptions: defNavOptions
     }
   );
 
@@ -49,12 +48,7 @@ const WorldNavigation = createStackNavigator(
       Home:Homepage
     },
     {
-      defaultNavigationOptions: {
-        headerStyle: {
-          backgroundColor: Platform.OS === "android" ? Colors.primary : "",
-        },
-        headerTintColor: Platform.OS === "android" ? "white" : Colors.primary,
-      },
+      defaultNavigationOptions: defNavOptions
       
     },
     
@@ -76,6 +70,7 @@ const JungleBottom = createBottomTabNavigator(
             );
           },
         },
+
       },
       Inventory: {
         screen: InventoryNavigation,
@@ -102,9 +97,14 @@ const JungleBottom = createBottomTabNavigator(
     {
       //Second argument
       tabBarOptions: {
-        activeTintColor: Colors.accentColor,
+        activeTintColor: 'orange',
         style:{
-          backgroundColor: Colors.primaryColor
+          backgroundColor: '#161616',
+          padding:7
+        },
+        labelStyle:{
+          fontFamily:"Gaming",
+          fontSize:15
         }
       },
     }

@@ -3,7 +3,6 @@
 
 export const isLevelUpPet = (pet) =>{
 
-    console.log(pet.level, pet.exp, pet.attack)
     const currentLevel = pet.level
     let newLevel = pet.level;
 
