@@ -48,12 +48,12 @@ const MyModal = ({
     if (modalType != "upgrade") {
       return (
         <TouchableHighlight
-          style={{ ...styles.openButton, backgroundColor: "#d9534f" }}
+          style={{ ...styles.openButton, backgroundColor: "red" }}
           onPress={() => {
             actionHandler(clickedThing);
           }}
         >
-          <Text style={styles.textStyle}>{buttonText}</Text>
+          <Text style={styles.gamingFontNormal}>{buttonText}</Text>
         </TouchableHighlight>
       );
     }
@@ -76,7 +76,7 @@ const MyModal = ({
           }
         }}
       >
-        <Text style={styles.textStyle}>
+        <Text style={styles.gamingFontNormal}>
           {upgradeAllowed ? buttonText : "Not enough gold"}
         </Text>
       </TouchableHighlight>
@@ -89,28 +89,27 @@ const MyModal = ({
       transparent={true}
       visible={modalVisible}
       onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
       }}
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Text>{heading}</Text>
+          <Text style={styles.gamingFontBig}>{heading}</Text>
           {modalType == "upgrade" && (
             <View>
-              <Text>{`Current Tier ${clickedThing.upgrade} / 3`}</Text>
-              <Text>{`Next tier: +${upgradeUpd} attributes`}</Text>
-              <Text>{`Upgrade cost ${upgradeCost} gold.`}</Text>
+              <Text style={styles.gamingFontNormal}>{`Current Tier ${clickedThing.upgrade} / 3`}</Text>
+              <Text style={styles.gamingFontNormal}>{`Next tier: +${upgradeUpd} attributes`}</Text>
+              <Text style={styles.gamingFontNormal}>{`Upgrade cost ${upgradeCost} gold.`}</Text>
             </View>
           )}
 
           <View style={styles.actionButtons}>
             <TouchableHighlight
-              style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+              style={{ ...styles.openButton, backgroundColor: "rgb(235, 108, 108)" }}
               onPress={() => {
                 setModalVisible(!modalVisible);
               }}
             >
-              <Text style={styles.textStyle}>Close</Text>
+              <Text style={styles.gamingFontNormal}>Close</Text>
             </TouchableHighlight>
             {dynamicActionButton()}
           </View>
@@ -148,7 +147,7 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: Colors.background,
     borderRadius: 20,
     padding: 35,
     alignItems: "center",
@@ -163,7 +162,7 @@ const styles = StyleSheet.create({
   },
   openButton: {
     backgroundColor: "#F194FF",
-    borderRadius: 20,
+    borderRadius: 10,
     padding: 10,
     elevation: 2,
     marginHorizontal: 5,
@@ -181,4 +180,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 10,
   },
+  gamingFontNormal:{
+    color:Colors.primaryFont,
+    fontFamily: "Gaming",
+    fontSize:16
+  },
+  gamingFontBig:{
+    color:Colors.primaryFont,
+    fontFamily: "Gaming",
+    fontSize:20
+  }
 });

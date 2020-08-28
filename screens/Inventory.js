@@ -61,6 +61,18 @@ const Inventory = (props) => {
     setModalVisible1(false);
   };
 
+  const ItemUpgradesComponent = (item) => {
+    let something = new Array();
+    for(let i = 0; i < item.upgrade; i++){
+        something.push(<Image style={styles.tiersIconImage} source={{uri:Colors.ItemTiers[i]}} />)
+    }
+
+    console.log(something)
+    return something
+  }
+
+
+
   return (
     <View style={styles.inventoryContainer}>
       {inventory ? (
@@ -85,24 +97,28 @@ const Inventory = (props) => {
                 fontColor={Colors.primaryFont}
               />
               <View style={styles.buttonActions}>
-                <Button
-                  title="Equip"
+                <TouchableOpacity
+                  textStyle={{fontFamily:"Gaming"}}
                   onPress={() => EquipItemHandler(itemData.item)}
-                />
-                <Button
-                  title="Delete"
+                >
+                  <Text style={styles.equipButton}>Equip</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
                   onPress={() => {
                     setClickedThing(itemData.item);
                     setModalVisible(true);
                   }}
-                />
-                <Button
-                  title="Sell"
+                >
+                  <Text style={styles.deleteButton}>Delete</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
                   onPress={() => {
                     setClickedThing(itemData.item);
                     setModalVisible1(true);
                   }}
-                />
+                >
+                    <Text style={styles.sellButton}>Sell</Text>
+                </TouchableOpacity>
               </View>
             </TouchableOpacity>
           )}
@@ -126,7 +142,7 @@ const Inventory = (props) => {
         actionHandler={SellItemHandler}
         clickedThing={clickedThing}
         modalVisible={modalVisible1}
-        setModalVisible={setModalVisible2}
+        setModalVisible={setModalVisible1}
       />
       <Modal
         heading="Upgrade item ?"
@@ -173,9 +189,13 @@ const styles = StyleSheet.create({
   },
   buttonActions: {
     flexDirection: "row",
+    justifyContent:'space-between',
+    marginTop:5
   },
   flatList: {
     flex: 1,
+    backgroundColor:'rgb(29,23,25)',
+    paddingHorizontal:25
   },
   centeredView: {
     flex: 1,
@@ -218,4 +238,28 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     margin: 10,
   },
+  equipButton:{
+    fontFamily:"Gaming",
+    fontSize:18,
+    color:'green',
+    borderColor:'green',
+    borderWidth:1,
+    padding:5
+  },
+  deleteButton:{
+    fontFamily:"Gaming",
+    fontSize:18,
+    color:'red',
+    borderColor:'red',
+    borderWidth:1,
+    padding:5
+  },
+  sellButton:{
+    fontFamily:"Gaming",
+    fontSize:18,
+    color:'orange',
+    borderColor:'orange',
+    borderWidth:1,
+    padding:5
+  }
 });
