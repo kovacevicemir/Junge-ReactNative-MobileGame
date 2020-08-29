@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
   gamingFontBig: {
     fontFamily: "Gaming",
     fontSize: 20,
-    color:"rgb(176,175,173)"
+    color:"rgb(6,101,195)",
+    letterSpacing:1
   },
 });

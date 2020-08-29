@@ -2,11 +2,15 @@
 //OUTPUT random number of random mobs from it and return
 
 export const getRandomMobs = (monsters,boss) =>{
+    let rndNum = Math.floor(Math.random() * 100);
 
-    let rndNum = Math.floor(Math.random() * Math.floor(2))
-
-    if(rndNum === 1){
-        return monsters
+    if(rndNum < 90){
+        let randStart = Math.floor(Math.random() * monsters.length);
+        if(randStart == monsters.length){
+            randStart -= 1;
+        }
+        let randomMonsters = monsters.sort(() => Math.random() - Math.random()).slice(randStart, monsters.length)
+        return randomMonsters
     }else{
         let bossArray = new Array()
         bossArray.push(boss)

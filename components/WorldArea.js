@@ -12,6 +12,7 @@ import Colors from "../assets/Colors";
 import { useDispatch } from "react-redux";
 import * as WorldActions from "../store/actions/world";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { LinearGradient } from "expo-linear-gradient";
 
 const WorldArea = (props) => {
   const { randomMonsters, fetching, player, fight, world } = props;
@@ -70,9 +71,20 @@ const WorldArea = (props) => {
   if (fetching) {
     return (
       <View style={styles.areaContainer}>
-        <View style={styles.areaBottom}>
+        <LinearGradient style={styles.areaBottom}
+        colors={["rgba(0,0,0,0.9)", "transparent"]}
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: 0,
+          height: "100%",
+          zIndex: 5,
+          justifyContent:"center",
+          alignItems:'center'
+        }}>
           <Text style={styles.searchingText}>Searching area...</Text>
-        </View>
+        </LinearGradient>
       </View>
     );
   }
@@ -80,18 +92,40 @@ const WorldArea = (props) => {
   if (isFight) {
     return (
       <View style={styles.areaContainer}>
-        <View style={styles.areaBottom}>
+        <LinearGradient style={styles.areaBottom}
+        colors={["rgba(0,0,0,0.9)", "transparent"]}
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: 0,
+          height: "100%",
+          zIndex: 5,
+          justifyContent:"center",
+          alignItems:'center'
+        }}>
           <Text style={styles.searchingText}>Fighting...</Text>
-        </View>
+        </LinearGradient>
       </View>
     );
   }
 
   return (
     <View style={styles.areaContainer}>
-      <View style={styles.areaBottom}>
+      <LinearGradient
+        style={styles.areaBottom}
+        colors={["rgba(0,0,0,0.9)", "transparent"]}
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: 0,
+          height: "100%",
+          zIndex: 5,
+        }}
+      >
         {mobs ? (
-          <View>
+          <View style={styles.testt}>
             {mobs.length == 0 && (
               <View style={styles.swipeMessageContainer}>
                 <Text style={styles.gamingFontBig}>
@@ -100,7 +134,7 @@ const WorldArea = (props) => {
                 <Text style={styles.gamingFontBig}>
                   Swipe left to change world area...
                 </Text>
-            </View>
+              </View>
             )}
 
             <FlatList
@@ -122,7 +156,7 @@ const WorldArea = (props) => {
             </Text>
           </View>
         )}
-      </View>
+      </LinearGradient>
     </View>
   );
 };
@@ -142,6 +176,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 300,
+    zIndex: 2,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   mobImage: {
@@ -155,10 +197,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     margin: 10,
-    borderRadius:5,
-    borderColor:'red',
-    borderWidth:1,
-    padding:5
+    borderRadius: 5,
+    borderColor: "red",
+    borderWidth: 1,
+    padding: 5,
+    
+  },
+  testt:{
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 300,
+    zIndex: 2,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   mobInfo: {
     justifyContent: "center",
@@ -166,8 +219,11 @@ const styles = StyleSheet.create({
   },
   searchingText: {
     color: Colors.primaryFont,
-    fontSize: 16,
+    fontSize: 22,
     marginTop: 25,
+    fontFamily:"Gaming",
+    letterSpacing:3
+    
   },
   gamingFontNormal: {
     color: Colors.primaryFont,
@@ -179,9 +235,9 @@ const styles = StyleSheet.create({
     fontFamily: "Gaming",
     fontSize: 20,
   },
-  swipeMessageContainer:{
-    display:'flex',
-    justifyContent:'center',
-    alignItems:'center'
-  }
+  swipeMessageContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });

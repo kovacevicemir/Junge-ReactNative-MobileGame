@@ -7,7 +7,7 @@ import {
   Button,
   ImageBackground,
   Image,
-  Alert 
+  Alert,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import WorldArea from "../components/WorldArea";
@@ -15,25 +15,25 @@ import { getRandomMobs } from "../helpers/getRandomMobs";
 import HeaderButton from "../components/HeaderButton";
 import Colors from "../assets/Colors";
 import { useSelector, useDispatch } from "react-redux";
-import * as UserActions from '../store/actions/user'
-import * as WorldActions from '../store/actions/world'
+import * as UserActions from "../store/actions/user";
+import * as WorldActions from "../store/actions/world";
+import { LinearGradient } from "expo-linear-gradient";
+
 import GestureRecognizer, {
   swipeDirections,
 } from "react-native-swipe-gestures";
 import * as Progress from "react-native-progress";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-
 const World = (props) => {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   //global message
-  const fetchGlobalMessage = useSelector((state) => state.user.globalMessage)
-  const [message, setMessage] = useState()
+  const fetchGlobalMessage = useSelector((state) => state.user.globalMessage);
+  const [message, setMessage] = useState();
 
-  useEffect(()=>{
-    if(fetchGlobalMessage){
+  useEffect(() => {
+    if (fetchGlobalMessage) {
       Alert.alert(
         "LEVEL UP!",
         fetchGlobalMessage,
@@ -41,18 +41,14 @@ const World = (props) => {
           {
             text: "OK",
             onPress: () => dispatch(UserActions.removeGlobalMessage()),
-            style: "cancel"
+            style: "cancel",
           },
         ],
         { cancelable: false }
       );
     }
-  },[fetchGlobalMessage])
+  }, [fetchGlobalMessage]);
   //
-
-
-
- 
 
   //Get player data, worlds data, and fight
   //If fight is null -> battle log and fight is not rendered.
@@ -81,7 +77,7 @@ const World = (props) => {
   const [fightLogIndex, setFightLogIndex] = useState(0);
 
   //if null remove stop interval +1 index, and clear fightLog
-  const [fightResult, setFightResult] = useState()
+  const [fightResult, setFightResult] = useState();
 
   useEffect(() => {
     setPlayer(fetchPlayer);
@@ -104,7 +100,6 @@ const World = (props) => {
     }
   }, []);
 
-
   const createThreeButtonAlert = () =>
     Alert.alert(
       "Alert Title",
@@ -112,14 +107,14 @@ const World = (props) => {
       [
         {
           text: "Ask me later",
-          onPress: () => console.log("Ask me later pressed")
+          onPress: () => console.log("Ask me later pressed"),
         },
         {
           text: "Cancel",
           onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
+          style: "cancel",
         },
-        { text: "OK", onPress: () => console.log("OK Pressed") }
+        { text: "OK", onPress: () => console.log("OK Pressed") },
       ],
       { cancelable: false }
     );
@@ -132,9 +127,8 @@ const World = (props) => {
         setWorld(null);
         break;
       case SWIPE_RIGHT:
-
         //Check if player have enough mana
-        if(player.mana < world.manaMultiplier){
+        if (player.mana < world.manaMultiplier) {
           Alert.alert(
             "You dont have enough mana!",
             "You cannot explore area because you run out of mana. Your mana regenerates every hour, please come back later.",
@@ -142,7 +136,7 @@ const World = (props) => {
               {
                 text: "OK",
                 onPress: () => dispatch(UserActions.removeGlobalMessage()),
-                style: "cancel"
+                style: "cancel",
               },
             ],
             { cancelable: false }
@@ -154,16 +148,16 @@ const World = (props) => {
         setGeneratingMobs(true);
 
         //reduce mana
-        dispatch(UserActions.reduceMana(world.manaMultiplier))
+        dispatch(UserActions.reduceMana(world.manaMultiplier));
 
-        let newMobs = getRandomMobs(world.monsters, world.boss)
+        let newMobs = getRandomMobs(world.monsters, world.boss);
         setRandomMonsters(newMobs);
 
         const timeout1 = setTimeout(() => {
           setGeneratingMobs(false);
-          clearTimeout(timeout1)
+          clearTimeout(timeout1);
         }, 1000);
-        
+
         break;
     }
   };
@@ -174,106 +168,136 @@ const World = (props) => {
 
   const RenderFight = () => {
     if (fight) {
-
       let timeout = setInterval(() => {
         setFightLogIndex(fightLogIndex + 1);
       }, 700);
 
-      useEffect(()=>{
-        return () =>{
-          clearInterval(timeout)
-        }
-      },[fightLogIndex])
-      
+      useEffect(() => {
+        return () => {
+          clearInterval(timeout);
+        };
+      }, [fightLogIndex]);
 
-      let progressPlayer = parseFloat((fight.fightLog.playerHp[fightLogIndex] / player.hp).toFixed(2));
-      let progressMob = parseFloat((fight.fightLog.monsterHp[fightLogIndex] / fight.mob.hp).toFixed(2));
+      let progressPlayer = parseFloat(
+        (fight.fightLog.playerHp[fightLogIndex] / player.hp).toFixed(2)
+      );
+      let progressMob = parseFloat(
+        (fight.fightLog.monsterHp[fightLogIndex] / fight.mob.hp).toFixed(2)
+      );
       let playerAtt = fight.fightLog.playerAttacks[fightLogIndex];
       let mobAtt = fight.fightLog.monsterAttacks[fightLogIndex];
 
-      if(isNaN(mobAtt) && isNaN(playerAtt) && isNaN(progressMob) && isNaN(progressPlayer)){
-        clearInterval(timeout)
-        setFightResult(fight.win)
+      if (
+        isNaN(mobAtt) &&
+        isNaN(playerAtt) &&
+        isNaN(progressMob) &&
+        isNaN(progressPlayer)
+      ) {
+        clearInterval(timeout);
+        setFightResult(fight.win);
       }
-      
-      if(progressPlayer == undefined || isNaN(progressPlayer)){
-        const lastValue = fight.fightLog.playerHp.length -1
-        progressPlayer = parseFloat((fight.fightLog.playerHp[lastValue] / player.hp).toFixed(2));
-      } 
-      
-      if(progressMob == undefined || isNaN(progressMob)){
-        const lastValue = fight.fightLog.monsterHp.length-1
-        progressMob = parseFloat((fight.fightLog.monsterHp[lastValue] / fight.mob.hp).toFixed(2));
-      } 
-      
-      if(playerAtt == undefined || isNaN(playerAtt)){
-        const lastValue = fight.fightLog.playerAttacks.length -1
+
+      if (progressPlayer == undefined || isNaN(progressPlayer)) {
+        const lastValue = fight.fightLog.playerHp.length - 1;
+        progressPlayer = parseFloat(
+          (fight.fightLog.playerHp[lastValue] / player.hp).toFixed(2)
+        );
+      }
+
+      if (progressMob == undefined || isNaN(progressMob)) {
+        const lastValue = fight.fightLog.monsterHp.length - 1;
+        progressMob = parseFloat(
+          (fight.fightLog.monsterHp[lastValue] / fight.mob.hp).toFixed(2)
+        );
+      }
+
+      if (playerAtt == undefined || isNaN(playerAtt)) {
+        const lastValue = fight.fightLog.playerAttacks.length - 1;
         playerAtt = fight.fightLog.playerAttacks[lastValue];
       }
 
-      
-      if(mobAtt == undefined || isNaN(mobAtt)){
-        const lastValue = fight.fightLog.monsterAttacks.length -1
+      if (mobAtt == undefined || isNaN(mobAtt)) {
+        const lastValue = fight.fightLog.monsterAttacks.length - 1;
         mobAtt = fight.fightLog.monsterAttacks[lastValue];
       }
-
-      
 
       return (
         <View style={styles.fightLogContainer}>
           <View style={{ flexDirection: "row" }}>
             <View style={styles.fightPlayerContainer}>
-              <Text style={{ color: Colors.primaryFont }}>
+              <Text style={{ color: Colors.primaryFont, fontFamily: "Gaming" }}>
                 {player.nickname}
               </Text>
               <Image
                 source={{ uri: player.image }}
                 style={styles.playerImage}
               />
-              
-              <Progress.Bar progress={progressPlayer} color="green" width={100} />
-              <Text style={mobAtt === 'Block!' ? styles.monsterAttackBlock : styles.monsterAttackText}>
+
+              <Progress.Bar
+                progress={progressPlayer}
+                color="green"
+                width={100}
+              />
+              <Text
+                style={
+                  mobAtt === "Block!"
+                    ? styles.monsterAttackBlock
+                    : styles.monsterAttackText
+                }
+              >
                 {mobAtt}
               </Text>
             </View>
             <View style={styles.fightMobContainer}>
-              <Text style={{ color: Colors.primaryFont }}>
+              <Text style={{ color: Colors.primaryFont, fontFamily: "Gaming" }}>
                 {fight.mob.name}
               </Text>
               <Image
                 source={{ uri: fight.mob.image }}
                 style={styles.playerImage}
               />
-              
+
               <Progress.Bar progress={progressMob} color="green" width={100} />
-              <Text style={playerAtt > 0 ? styles.playerAttackText : styles.playerAttackCrit}>
-                {playerAtt > 0 ? playerAtt : `${playerAtt *-1}!`}
+              <Text
+                style={
+                  playerAtt > 0
+                    ? styles.playerAttackText
+                    : styles.playerAttackCrit
+                }
+              >
+                {playerAtt > 0 ? playerAtt : `${playerAtt * -1}!`}
               </Text>
             </View>
           </View>
-          {
-          fightResult === 'win' ? 
-          (
+          {fightResult === "win" ? (
             <View style={styles.fightResultStyle}>
               <Text style={styles.battleResultFont}>exp: {fight.mob.exp}</Text>
-              <Text style={styles.battleResultFont}>gold: {fight.mob.gold}</Text>
-              {fight.drop &&
-              <Text style={styles.battleResultFont}>drop: <Text style={{color:'orange'}}>{fight.drop.name}</Text></Text> }
+              <Text style={styles.battleResultFont}>
+                gold: {fight.mob.gold}
+              </Text>
+              {fight.drop && (
+                <Text style={styles.battleResultFont}>
+                  drop:{" "}
+                  <Text style={{ color: "orange" }}>{fight.drop.name}</Text>
+                </Text>
+              )}
             </View>
-          )
-          :
-          <View style={styles.fightResultStyle}>
-            {fightResult === 'lost' && <Text>You have lost the battle!</Text>}
-          </View> 
-          } 
-          <Button 
-          title="ok" 
-          onPress={() => {
-            setFightLogIndex(0) 
-            setFight(null)
-            setFightResult(null)
-          }} 
-          />
+          ) : (
+            <View style={styles.fightResultStyle}>
+              {fightResult === "lost" && <Text>You have lost the battle!</Text>}
+            </View>
+          )}
+          <TouchableOpacity
+            onPress={() => {
+              setFightLogIndex(0);
+              setFight(null);
+              setFightResult(null);
+            }}
+          >
+            <Text style={{ color: "rgb(176,175,173)", fontFamily: "Gaming", padding:5 }}>
+              close
+            </Text>
+          </TouchableOpacity>
         </View>
       );
     } else {
@@ -304,6 +328,16 @@ const World = (props) => {
                 source={{ uri: world.image }}
                 style={styles.backgroundImage}
               >
+                <LinearGradient
+                  colors={["transparent", "rgba(0,0,0,0.9)"]}
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    height: 150,
+                  }}
+                />
                 {fight && <RenderFight />}
               </ImageBackground>
             </View>
@@ -333,7 +367,7 @@ const World = (props) => {
         title={`${world.name} (${world.levelRange}) LVL`}
         onPress={() => {
           //check if enough mana
-          if(player.mana < world.manaMultiplier){
+          if (player.mana < world.manaMultiplier) {
             Alert.alert(
               "You dont have enough mana!",
               "You cannot explore area because you run out of mana. Your mana regenerates every hour, please come back later.",
@@ -341,29 +375,34 @@ const World = (props) => {
                 {
                   text: "OK",
                   onPress: () => dispatch(UserActions.removeGlobalMessage()),
-                  style: "cancel"
+                  style: "cancel",
                 },
               ],
               { cancelable: false }
             );
-          }else{
-            dispatch(UserActions.reduceMana(world.manaMultiplier))
+          } else {
+            dispatch(UserActions.reduceMana(world.manaMultiplier));
             setWorld(world);
             setRandomMonsters(getRandomMobs(world.monsters, world.boss));
           }
-          
         }}
       >
         <Text style={styles.gamingFontNormal}>
-        {world.name}
-        {world.levelRange} LVL
+          {world.name}
+          {world.levelRange} LVL
         </Text>
       </TouchableOpacity>
     );
   });
 
   return (
-    <ImageBackground source={{uri:"https://nicolekennedydesign.files.wordpress.com/2012/10/rainforest_large.jpg"}} style={styles.worldContainer}>
+    <ImageBackground
+      source={{
+        uri:
+          "https://nicolekennedydesign.files.wordpress.com/2012/10/rainforest_large.jpg",
+      }}
+      style={styles.worldContainer}
+    >
       <Text style={styles.gamingFontBig}>J U N G L E</Text>
       {renderWorlds}
     </ImageBackground>
@@ -376,7 +415,9 @@ World.navigationOptions = (navData) => {
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
           title="Home"
-          iconName={Platform.OS === "android" ? "help-circle" : "ios-help-circle"}
+          iconName={
+            Platform.OS === "android" ? "help-circle" : "ios-help-circle"
+          }
           onPress={() => {
             navData.navigation.navigate("Home");
           }}
@@ -410,10 +451,11 @@ const styles = StyleSheet.create({
   worldTitle: {
     fontSize: 22,
     color: Colors.primaryFont,
-    fontFamily:"Gaming"
+    fontFamily: "Gaming",
   },
-  battleResultFont:{
-    color:'yellow'
+  battleResultFont: {
+    color: "yellow",
+    fontFamily: "Gaming",
   },
   fightLogContainer: {
     backgroundColor: "rgba(0,0,0,0.75)",
@@ -431,44 +473,48 @@ const styles = StyleSheet.create({
   fightPlayerContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal:10
+    marginHorizontal: 10,
   },
   fightMobContainer: {
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal:10
+    marginHorizontal: 10,
   },
   monsterAttackText: {
     color: "#ab433c",
+    fontFamily: "Gaming",
   },
   playerAttackText: {
     color: "yellow",
-  },
-  fightResultStyle:{
-    minHeight:50
-  },
-  playerAttackCrit:{
-    color:'red',
-    fontWeight:'800'
-  },
-  monsterAttackBlock:{
-    color:'#318fe8',
-    fontWeight:'700'
-  },
-  gamingFontNormal:{
-    color:Colors.primaryFont,
     fontFamily: "Gaming",
-    fontSize:16
   },
-  gamingFontBig:{
-    color:Colors.primaryFont,
+  fightResultStyle: {
+    minHeight: 50,
+  },
+  playerAttackCrit: {
+    color: "red",
+    fontWeight: "800",
     fontFamily: "Gaming",
-    fontSize:30
   },
-  worldAreaButton:{
-    backgroundColor:'black',
-    padding:10,
-    margin:5,
-    borderRadius:3
-  }
+  monsterAttackBlock: {
+    color: "#318fe8",
+    fontWeight: "700",
+    fontFamily: "Gaming",
+  },
+  gamingFontNormal: {
+    color: Colors.primaryFont,
+    fontFamily: "Gaming",
+    fontSize: 16,
+  },
+  gamingFontBig: {
+    color: Colors.primaryFont,
+    fontFamily: "Gaming",
+    fontSize: 30,
+  },
+  worldAreaButton: {
+    backgroundColor: "black",
+    padding: 10,
+    margin: 5,
+    borderRadius: 3,
+  },
 });

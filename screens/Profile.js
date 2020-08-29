@@ -16,6 +16,7 @@ import HeaderButton from "../components/HeaderButton";
 import Colors from "../assets/Colors";
 import { useSelector } from "react-redux";
 import ItemDetails from "../components/ItemDetails";
+import { LinearGradient } from "expo-linear-gradient";
 
 const Profile = (props) => {
   const fetchPlayer = useSelector((state) => state.user.player);
@@ -33,7 +34,14 @@ const Profile = (props) => {
   }
 
   return (
-    <View style={styles.profileContainer}>
+    <LinearGradient colors={["transparent", "rgba(0,0,0,0.9)"]}
+    style={{
+      position: "absolute",
+      left: 0,
+      right: 0,
+      bottom: 0,
+      height: 150,
+    }} style={styles.profileContainer}>
       <ScrollView style={styles.scrollView}>
         {/* Top Section */}
         <View style={styles.topSection}>
@@ -162,7 +170,7 @@ const Profile = (props) => {
           </View>
         </Modal>
       </View>
-    </View>
+    </LinearGradient>
   );
 };
 
@@ -334,11 +342,13 @@ const styles = StyleSheet.create({
   gamingFontNormal:{
     color:Colors.primaryFont,
     fontFamily: "Gaming",
-    fontSize:16
+    fontSize:16,
+    letterSpacing:1
   },
   gamingFontBig:{
     color:Colors.primaryFont,
     fontFamily: "Gaming",
-    fontSize:20
+    fontSize:20,
+    color:"orange"
   }
 });
