@@ -16,7 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 const defNavOptions = {
   headerStyle: {
-    backgroundColor: Platform.OS === "android" ? Colors.primary : '#161616',
+    backgroundColor: Platform.OS === "android" ? '#161616' : '#161616',
   },
   headerTintColor: Platform.OS === "android" ? "white" : '',
 }
@@ -113,8 +113,8 @@ const JungleBottom = createBottomTabNavigator(
 
   const MainNav = createSwitchNavigator(
     {
-        Home:JungleBottom,
         Auth:Authentication,
+        Home:JungleBottom,
     },
   );
   

@@ -24,8 +24,8 @@ export const mobs = [
 export const pets = [
     //id,name,level,mana,exp,attack,deffense,hp,image
     new Pet('p1','cat',1,20,1,1,1,10,'https://media0.giphy.com/media/B9yqVMxkcBpu0/giphy.gif', 10),
-    new Pet('p2','dog',5,30,1,0,1,20,'https://pbs.twimg.com/profile_images/528591999272644608/agjfAJAW_400x400.jpeg', 20),
-    new Pet('p3','wolf',10,50,1,1,3,30,'https://i.pinimg.com/236x/e6/af/d7/e6afd79712210fc1b2c168ac588a8b08--she-s-glow.jpg', 30),
+    new Pet('p2','dog',1,30,1,0,1,20,'https://pbs.twimg.com/profile_images/528591999272644608/agjfAJAW_400x400.jpeg', 20),
+    new Pet('p3','wolf',1,50,1,1,3,30,'https://i.pinimg.com/236x/e6/af/d7/e6afd79712210fc1b2c168ac588a8b08--she-s-glow.jpg', 30),
 ]
 
 export const players = [
@@ -35,7 +35,7 @@ export const players = [
 ]
 
 export const inventories = [
-    new Inventory('in1',[items[1],items[2],pets[1]]),
+    new Inventory('in1',[items[1],items[2],pets[2]]),
 
 
     new Inventory('in2',['i1','i2','i3']),

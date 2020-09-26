@@ -33,6 +33,7 @@ const Profile = (props) => {
     return <Text>Trying to fetch Player or Pet... loading</Text>;
   }
 
+
   return (
     <LinearGradient colors={["transparent", "rgba(0,0,0,0.9)"]}
     style={{

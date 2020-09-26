@@ -15,18 +15,17 @@ import {ATTACK_MOB} from '../actions/world'
 
 import Player from '../../models/Player'
 
-let player = players.find(player => player.id === 'u1')
-const inventory = inventories.find(inventory => inventory.id === player.inventoryId)
+// let player = players.find(player => player.nickname === 'player_one')
+// const inventory = inventories.find(inventory => inventory.id === player.inventoryId)
 
-//Calculate player stats
-player = statsTotal(player)
+
 
 
 const initialState = {
     token:null,
     userId: 'u1',
-    player: player,
-    inventory: inventory,
+    player: null,
+    inventory: null,
     globalMessage:null
 }
 
@@ -48,8 +47,19 @@ export default (state = initialState, action) =>{
             }
 
         case LOGIN:
+            let getPlayer = action.payload;
+
+            console.log('REDUCER getPlayer:::::',getPlayer);
+
+            const inventory = inventories.find(inventory => inventory.id === getPlayer.inventoryId)
             
-            return state;
+            //Calculate player stats
+            getPlayer = statsTotal(getPlayer)
+            return {
+                ...state,
+                inventory:inventory,
+                player:getPlayer
+            }
 
         case EQUIP:
 
