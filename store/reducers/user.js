@@ -9,7 +9,7 @@ import {isLevelUp} from '../../helpers/isLevelUp'
 import {isLevelUpPet} from '../../helpers/isLevelUpPet'
 import {upgradeItem} from '../../helpers/upgradeItem'
 
-import {LOGIN, EQUIP, DELETE_ITEM, REMOVE_GLOBAL_MESSAGE, REDUCE_MANA, SELL_ITEM, UPGRADE_ITEM} from '../actions/user'
+import {LOGIN, EQUIP, DELETE_ITEM, REMOVE_GLOBAL_MESSAGE, REDUCE_MANA, SELL_ITEM, UPGRADE_ITEM, SET_OR_REMOVE_ERROR_MESSAGE, CREATE_NEW_USER} from '../actions/user'
 import {ATTACK_MOB} from '../actions/world'
 
 
@@ -26,11 +26,25 @@ const initialState = {
     userId: 'u1',
     player: null,
     inventory: null,
-    globalMessage:null
+    globalMessage:null,
+    errorMessage:null
 }
 
 export default (state = initialState, action) =>{
     switch (action.type) {
+        case CREATE_NEW_USER:
+            return{
+                ...state,
+                player:action.payload.player,
+                inventory:action.payload.inventory
+            }
+
+        case SET_OR_REMOVE_ERROR_MESSAGE:
+            return{
+                ...state,
+                errorMessage:action.payload.message
+            }
+
         case REMOVE_GLOBAL_MESSAGE:
             return{
                 ...state,

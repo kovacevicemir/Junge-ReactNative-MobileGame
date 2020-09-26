@@ -17,7 +17,8 @@ class Player {
     equipedItems,
     image,
     profileStatus,
-    pet
+    pet,
+    password
   ) {
     (this.id = id),
       (this.email = email),
@@ -36,7 +37,8 @@ class Player {
       (this.equipedItems = equipedItems),
       (this.image = image),
       (this.profileStatus = profileStatus),
-        this.pet = pet;
+        this.pet = pet,
+        this.password = password
   }
 }
 
