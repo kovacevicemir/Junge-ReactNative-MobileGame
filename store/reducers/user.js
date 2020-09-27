@@ -65,7 +65,7 @@ export default (state = initialState, action) =>{
 
             console.log('REDUCER getPlayer:::::',getPlayer);
 
-            const inventory = inventories.find(inventory => inventory.id === getPlayer.inventoryId)
+            const inventory = inventories.find(inventory => inventory.id === getPlayer.id)
             
             //Calculate player stats
             getPlayer = statsTotal(getPlayer)

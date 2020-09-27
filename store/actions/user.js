@@ -1,5 +1,6 @@
 import axios from "axios";
 import Player from '../../models/Player'
+import Inventory from '../../models/Inventory'
 import {items,pets,inventories} from '../../data/dummy-data'
 
 
@@ -59,6 +60,7 @@ export const registration = (user) =>{
     console.log(user)
 
     let query1 = `http://192.168.1.17:1337/players`
+    let query2 = `http://192.168.1.17:1337/inventories`
 
     return async(dispatch) =>{
         try {
@@ -73,25 +75,36 @@ export const registration = (user) =>{
             let existingNickName = response.data.find(account => account.nickname == user.nickname);
 
             if(!existingEmailCheck && !existingNickName){
+                
+                //create new inventory for player
+                const newInventory = new Inventory(
+                    Math.random().toString(),
+                    []
+                )
+                const response2 = await axios.post(query2,newInventory);
+
+                console.log(response2.data)
+
                 //create new player
                 const newPlayer = new Player(
                     Math.random().toString(),
                     user.email,
                     user.nickname,
                     1,1,1,1000,10,5,100,5,5,100,
-                    'in2',
+                    response2.data.id,
                     {weapon:items[0],armor:items[2],shield:items[3]},
                     'https://image.freepik.com/free-vector/gamer-youtuber-gaming-avatar-with-headphones-esport-logo_8169-260.jpg',
                     'my status message',
                     pets[0],
                     user.password
                 );
-
                 const response1 = await axios.post(query1,newPlayer);
 
+                console.log('after res1')
 
-                if(response1.request.status == 200){
-                    dispatch({type:CREATE_NEW_USER, payload:{player:newPlayer, inventory:inventories[1]}})
+
+                if(response1.request.status == 200 && response2.request.status == 200){
+                    dispatch({type:CREATE_NEW_USER, payload:{player:newPlayer, inventory:newInventory}})
                 }else{
                     dispatch({type:SET_OR_REMOVE_ERROR_MESSAGE, payload:{message:"Something went wrong!"}})
                 }
